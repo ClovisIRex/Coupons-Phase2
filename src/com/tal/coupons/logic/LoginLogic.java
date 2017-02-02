@@ -5,9 +5,9 @@ import com.tal.coupons.dao.CustomerDao;
 import com.tal.coupons.enums.ErrorType;
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
-import com.tal.coupons.logic.interfaces.IUsersLogic;
+import com.tal.coupons.logic.interfaces.ILoginLogic;
 
-public class UsersLogic implements IUsersLogic {
+public class LoginLogic implements ILoginLogic {
 
 
 	/**

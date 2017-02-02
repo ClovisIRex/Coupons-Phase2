@@ -16,13 +16,13 @@ import com.tal.coupons.logic.interfaces.ICouponLogic;
  * @author Tal Livny
  *
  */
-public class CouponsLogic implements ICouponLogic {
+public class CouponLogic implements ICouponLogic {
 	
 	
 	
 	private CouponDao couponDao;
 	
-	public CouponsLogic() {
+	public CouponLogic() {
 		this.couponDao = new CouponDao();
 	}
 	
@@ -236,5 +236,7 @@ public class CouponsLogic implements ICouponLogic {
 
 		return coupons;
 	}
+	
+	
 
 }

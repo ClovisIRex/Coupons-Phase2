@@ -523,7 +523,7 @@ public class CouponDao implements ICouponsDao {
 			String sql = "SELECT * FROM"
 					+ " (SELECT coupons.* FROM coupons "
 					+ "INNER JOIN join_customer_coupon "
-					+ "ON coupons.COUPON_ID=join_customer_coupon.COUPON_ID AND "
+					+ "ON coupons.COUPON_ID=join_customer_coupon.COUPON_ID "
 					+ ") AS innerSelect;";
 
 			// Creating a statement object which holds the SQL we're about to execute
@@ -639,7 +639,7 @@ public class CouponDao implements ICouponsDao {
 			preparedStatement = connection.prepareStatement(sql);
 			
 			// Replacing question mark with the price
-			preparedStatement.setString(8, String.valueOf(couponPrice));
+			preparedStatement.setString(1, String.valueOf(couponPrice));
 						
 
 			resultSet = preparedStatement.executeQuery(); 

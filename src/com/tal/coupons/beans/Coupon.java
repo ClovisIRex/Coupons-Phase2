@@ -2,12 +2,15 @@ package com.tal.coupons.beans;
 
 import com.tal.coupons.enums.CouponType;
 import java.util.Calendar;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class provides the basic bean structure of a 'Coupon' object,
  * which will be used in higher layers of this program.
  * @author Tal Livny
  */
+
+@XmlRootElement
 public class Coupon {
 	private long couponId;
 	private String couponTitle;

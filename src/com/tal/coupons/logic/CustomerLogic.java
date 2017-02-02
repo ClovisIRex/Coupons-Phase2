@@ -10,7 +10,7 @@ import com.tal.coupons.enums.ErrorType;
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
 import com.tal.coupons.logic.interfaces.ICustomerLogic;
-import com.tal.coupons.logic.interfaces.IUsersLogic;
+import com.tal.coupons.logic.interfaces.ILoginLogic;
 import com.tal.coupons.utils.ValidationUtils;
 
 
@@ -50,7 +50,7 @@ public class CustomerLogic implements ICustomerLogic {
 
 		//If we got this point it means all is fine and it's ok to update
 		customerDao.createCustomer(customer);
-		System.out.println("Company: " + customer.toString() + " Has been created!");
+		System.out.println("Customer: " + customer.toString() + " Has been created!");
 		
 	}
 

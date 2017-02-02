@@ -1,9 +1,14 @@
 package com.tal.coupons.beans;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class provides the basic bean structure of a 'Customer' object,
  * which will be used in higher layers of this program.
  * @author Tal Livny
  */
+
+@XmlRootElement
 public class Customer {
 	private long id;
 	private String custName;

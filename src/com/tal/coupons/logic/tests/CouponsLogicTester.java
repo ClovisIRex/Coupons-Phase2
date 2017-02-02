@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import com.tal.coupons.beans.Coupon;
 import com.tal.coupons.enums.CouponType;
 import com.tal.coupons.exceptions.ApplicationException;
-import com.tal.coupons.logic.CouponsLogic;
+import com.tal.coupons.logic.CouponLogic;
 
 public class CouponsLogicTester {
 	
-	private static CouponsLogic cLogic = new CouponsLogic();
+	private static CouponLogic cLogic = new CouponLogic();
 	
 	public static void createCouponTest(Coupon coupon) {
 		try {
