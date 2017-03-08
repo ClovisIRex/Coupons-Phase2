@@ -1,0 +1,72 @@
+.container{
+  margin-top: 20px;
+}
+.col-md-6 {
+  border-style: groove;
+  border-width: thin;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #F0F0FF;
+}
+
+.loginbutton {
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+
+}
+.loginbutton:hover {background-color: #3e8e41}
+
+.loginbutton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.registerbutton {
+  font-size: 24px;
+  text-align: center;
+  color: #fff;
+  background-color: #699cef;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+
+}
+.registerbutton:hover {background-color: #2d72e2}
+
+.registerbutton:active {
+  background-color: #2d72e2;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.dropdown-toggle {
+  font-size: 20px;
+  background-color: #57aaa2;
+  color: #fff;
+  outline: none;
+  text-align: center;
+  display: inline;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 9px #999;
+}
+.dropdown-toggle:hover {
+  background-color: #25544f;
+}
+
+.dropdown-toggle:active,
+.dropdown-menu:active{
+  background-color: #25544f
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

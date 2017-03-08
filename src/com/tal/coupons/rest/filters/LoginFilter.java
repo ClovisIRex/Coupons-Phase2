@@ -1,3 +1,4 @@
+/*
 package com.tal.coupons.rest.filters;
 
 import java.io.IOException;
@@ -52,3 +53,4 @@ public class LoginFilter implements Filter {
 	}
 
 }
+*/
