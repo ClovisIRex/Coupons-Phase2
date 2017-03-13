@@ -19,16 +19,16 @@ import com.tal.coupons.rest.beans.LoginDetails;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class LoginApi {
-	
+
 	@POST
 	public boolean login(LoginDetails details) throws ApplicationException {
-		
+
 		LoginLogic loginLogic = new LoginLogic();
 		boolean isLoginSuccessfull = loginLogic.login(details.getUsername(),
 				details.getPassword(), details.getClientType());
-		
+
 		return isLoginSuccessfull;
-		
+
 	}
 
 }

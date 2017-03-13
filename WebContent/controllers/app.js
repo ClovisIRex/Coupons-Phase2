@@ -5,7 +5,9 @@ app.config(function($routeProvider) {
         templateUrl : "login/login.htm"
     })
     .when("/login", {
-        templateUrl : "login/login.htm"
+        templateUrl : "login/login.htm",
+        controller: "LoginController",
+        controllerAs: "vm"
 
     })
     .when("/register", {
