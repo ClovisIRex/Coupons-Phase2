@@ -4,6 +4,11 @@ import java.util.Collection;
 import com.tal.coupons.beans.Customer;
 import com.tal.coupons.exceptions.ApplicationException;
 
+/**
+ * /**
+ * This interface is to be used by the CompanyLogic class, contains method related to customers.
+ * @author Sol Invictus
+ */
 public interface ICustomerLogic {
 	
 	public void createCustomer(Customer customer) throws ApplicationException;

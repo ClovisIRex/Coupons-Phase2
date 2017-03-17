@@ -5,7 +5,7 @@ import com.tal.coupons.enums.ErrorType;
 /**
  *	This class provides a custom exception mechanism which is used throughout the program in order to identify various errors
  *	via error id's.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class ApplicationException extends Exception {

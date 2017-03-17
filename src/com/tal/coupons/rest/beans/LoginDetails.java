@@ -9,13 +9,13 @@ public class LoginDetails {
 	
 	private String username;
 	private String password;
-	private UserProfile clientType;
+	private int clientType;
 	
 	public LoginDetails() {
 		
 	}
 	
-	public LoginDetails(String username, String password, UserProfile clientType) {
+	public LoginDetails(String username, String password, int clientType) {
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setClientType(clientType);
@@ -37,11 +37,11 @@ public class LoginDetails {
 		this.password = password;
 	}
 
-	public UserProfile getClientType() {
+	public int getClientType() {
 		return clientType;
 	}
 
-	public void setClientType(UserProfile clientType) {
+	public void setClientType(int clientType) {
 		this.clientType = clientType;
 	}
 

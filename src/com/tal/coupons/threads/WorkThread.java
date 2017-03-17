@@ -6,7 +6,7 @@ import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * This is the "janitor" thread which is meant to remove old coupons from the db.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class WorkThread implements Runnable {

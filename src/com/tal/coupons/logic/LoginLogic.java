@@ -12,7 +12,7 @@ public class LoginLogic implements ILoginLogic {
 
 	/**
 	 * This function performs a login to to system by verifying the user's credentials according to its profile
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException 
 	 */
 	@Override
@@ -49,6 +49,7 @@ public class LoginLogic implements ILoginLogic {
 		}
 		
 		else { 
+			System.out.println(UserProfile.CUSTOMER);
 			throw new ApplicationException(ErrorType.LOGIN_PROFILE_INVALID, null, "Invalid user profile- only customer or company allowed.");
 		}
 		

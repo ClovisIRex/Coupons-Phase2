@@ -2,7 +2,7 @@ package com.tal.coupons.enums;
 
 /**
  * This enum provides the possible coupon types by category.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 public enum CouponType {

@@ -21,7 +21,7 @@ import com.tal.coupons.utils.JdbcUtils;
 
 /**
  * This Dao object is responsible with altering the DB in Coupon-related columns and tables.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CouponDao implements ICouponsDao {
@@ -31,7 +31,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function creastes a new coupon entry in the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void createCoupon(Coupon coupon) throws ApplicationException {
@@ -102,7 +102,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function removes a coupon from the db according to its ID.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void removeCoupon(long couponID) throws ApplicationException {
@@ -143,7 +143,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function updates a coupon's details in the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void updateCoupon(Coupon coupon) throws ApplicationException {
@@ -195,7 +195,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function performes a coupon purchase- inserts values into join_customer_coupon table.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void purchaseCoupon(long customerID, long couponID) throws ApplicationException {
@@ -240,7 +240,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function creates a coupon bean object from fetching db details according to it's ID
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Coupon getCouponById(long couponId) throws ApplicationException {
@@ -295,7 +295,7 @@ public class CouponDao implements ICouponsDao {
 
 	/**
 	 * This function creates a coupon bean list from fetching db details according to it's type
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getCouponsByType(CouponType couponType) throws ApplicationException {
@@ -346,7 +346,7 @@ public class CouponDao implements ICouponsDao {
 
 	/**
 	 * This function creates a coupon bean list from fetching db details according to the creator's company id 
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getCouponsByCompanyId(long companyId) throws ApplicationException {
@@ -400,7 +400,7 @@ public class CouponDao implements ICouponsDao {
 
 	/**
 	 * This function creates a coupon bean list from fetching db details according to the buyer customer id crossed by 'join' query
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getCouponsByCustomerId(long customerId) throws ApplicationException {
@@ -456,7 +456,7 @@ public class CouponDao implements ICouponsDao {
 
 	/**
 	 * This function creates a coupon bean list of all coupons existing on the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getAllCoupons() throws ApplicationException {
@@ -503,7 +503,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function creates a coupon bean list containing only all the coupons that were purchased using a JOIN filter.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getAllPurchasedCoupons() throws ApplicationException {
@@ -555,7 +555,7 @@ public class CouponDao implements ICouponsDao {
 	/**
 	 * This function creates a coupon bean list containing only all the coupons that were purchased by using a
 	 *  JOIN filter according to their type.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getAllPurchasedCouponsByType(CouponType couponType) throws ApplicationException {
@@ -612,7 +612,7 @@ public class CouponDao implements ICouponsDao {
 	/**
 	 * This function creates a coupon bean list containing only all the coupons that were purchased by using a
 	 *  JOIN filter according to their price.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Coupon> getAllPurchasedCouponsByPrice(double couponPrice) throws ApplicationException {
@@ -669,7 +669,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function removes all the purchased coupons from the db according to their company ID.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public void removePurchasedCouponsByCompanyID(long companyID) throws ApplicationException {
 		Connection connection = null;
@@ -711,7 +711,7 @@ public class CouponDao implements ICouponsDao {
 	/**
 	 * This function deletes coupons whose end date has expired from both the coupons and join tables.
 	 *  for use with the janitor cleanup thread.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public void removeOldCoupons() throws ApplicationException {
 		Connection connection = null;
@@ -747,7 +747,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function checks if a coupon exists by fetching db details according to it's Title
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public boolean isCouponExistByTitle(String couponTitle) throws ApplicationException {
 		Connection connection = null;
@@ -793,7 +793,7 @@ public class CouponDao implements ICouponsDao {
 	
 	/**
 	 * This function checks if a the customer has already purchased the coupon
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public boolean isCouponAlreadyPurchased(long customerID, long couponID) throws ApplicationException {
 		Connection connection = null;
@@ -843,7 +843,7 @@ public class CouponDao implements ICouponsDao {
 	 * @param coupon
 	 * @param resultSet
 	 * @throws SQLException
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	private void extractDataFromResultSetToCouponBean (Coupon coupon, ResultSet resultSet) throws SQLException
 	{

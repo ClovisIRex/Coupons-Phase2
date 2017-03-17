@@ -19,7 +19,7 @@ import com.tal.coupons.utils.ValidationUtils;
 
 /**
  * This Logic class is responsible with Company-related actions.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CompanyLogic implements ICompanyLogic {
@@ -35,7 +35,7 @@ public class CompanyLogic implements ICompanyLogic {
 	
 	/**
 	 * Creates built-in Admin user
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public void createAdmin() throws ApplicationException {
 		
@@ -51,7 +51,7 @@ public class CompanyLogic implements ICompanyLogic {
 	
 	/**
 	 * This function checks for conditions while creating a company.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * 
 	 */
 	@Override
@@ -83,7 +83,7 @@ public class CompanyLogic implements ICompanyLogic {
 
 	/**
 	 * This function checks for conditions while deleting a company and all its related stock and purchaed coupons.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -107,7 +107,7 @@ public class CompanyLogic implements ICompanyLogic {
 	
 	/**
 	 * This function checks for conditions while updating a company.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class CompanyLogic implements ICompanyLogic {
 
 	/**
 	 * This function checks for conditions while getting a company by ID.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Company getCompanyById(long companyID) throws ApplicationException {
@@ -157,7 +157,7 @@ public class CompanyLogic implements ICompanyLogic {
 
 	/**
 	 * This function gets all companies from the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Company> getAllCompanies() throws ApplicationException {

@@ -6,6 +6,11 @@ import com.tal.coupons.beans.Coupon;
 import com.tal.coupons.enums.CouponType;
 import com.tal.coupons.exceptions.ApplicationException;
 
+/**
+ * /**
+ * This interface is to be used by the CompanyLogic class, contains method related to coupons.
+ * @author Sol Invictus
+ */
 public interface ICouponLogic {
 	
 	public void createCoupon(Coupon coupon) throws ApplicationException;

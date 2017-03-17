@@ -2,15 +2,16 @@ package com.tal.coupons.beans;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.sun.org.apache.xml.internal.utils.SystemIDResolver;
+
 /**
  * This class provides the basic bean structure of a 'Company' object,
  * which will be used in higher layers of this program.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 @XmlRootElement
 public class Company {
-	
 	private long id;
 	private String compName;
 	private String password;
@@ -71,7 +72,5 @@ public class Company {
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", compName=" + compName + ", password=" + password + ", email=" + email + "]";
-	}
-	
-	
+	}	
 }

@@ -12,9 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.eclipse.jdt.internal.compiler.apt.dispatch.AptProblem;
-
 import com.tal.coupons.beans.Company;
 import com.tal.coupons.exceptions.ApplicationException;
 import com.tal.coupons.logic.CompanyLogic;

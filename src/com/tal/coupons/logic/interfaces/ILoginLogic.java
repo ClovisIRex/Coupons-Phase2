@@ -5,8 +5,8 @@ import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * /**
- * This interface is to be used by the userLogic.
- * @author Tal Livny
+ * This interface is to be used by the LoginLogic.
+ * @author Sol Invictus
  */
 public interface ILoginLogic {
 	

@@ -6,6 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class provides static method to interact with the DB via jdbc
+ * @author Sol Invictus
+ *
+ */
 public class JdbcUtils {
 
 

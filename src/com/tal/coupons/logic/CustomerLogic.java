@@ -16,7 +16,7 @@ import com.tal.coupons.utils.ValidationUtils;
 
 /**
  * This Logic class is responsible with Customer-related actions.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CustomerLogic implements ICustomerLogic {
@@ -30,7 +30,7 @@ public class CustomerLogic implements ICustomerLogic {
 	
 	/**
 	 * This function checks for conditions while creating a customer.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * 
 	 */
 	@Override
@@ -56,7 +56,7 @@ public class CustomerLogic implements ICustomerLogic {
 
 	/**
 	 * This function checks for conditions while deleting a customer and all its purchased coupons.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void removeCustomer(long customerID) throws ApplicationException {
@@ -72,7 +72,7 @@ public class CustomerLogic implements ICustomerLogic {
 
 	/**
 	 * This function checks for conditions while updating a customer.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -106,7 +106,7 @@ public class CustomerLogic implements ICustomerLogic {
 	
 	/**
 	 * This function checks for conditions while getting a customer by ID.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Customer getCustomerById(long customerId) throws ApplicationException {
@@ -122,7 +122,7 @@ public class CustomerLogic implements ICustomerLogic {
 	
 	/**
 	 * This function gets all customers from the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Customer> getAllCustomers() throws ApplicationException {

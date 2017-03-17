@@ -18,7 +18,7 @@ import com.tal.coupons.utils.JdbcUtils;
 
 /**
  * This Dao object is responsible with altering the DB in Customer-related columns and tables.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CustomerDao implements ICustomerDao {
@@ -28,7 +28,7 @@ public class CustomerDao implements ICustomerDao {
 
 	/**
 	 * This function creates a new customer entry in the db
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void createCustomer(Customer customer) throws ApplicationException {
@@ -89,7 +89,7 @@ public class CustomerDao implements ICustomerDao {
 	}
 	/**
 	 * This function deletes a customer entry in the db and all its purchased coupons
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void removeCustomer(long customerID) throws ApplicationException {
@@ -129,7 +129,7 @@ public class CustomerDao implements ICustomerDao {
 	
 	/**
 	 * This function alters details of a customer entry in the db
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void updateCustomer(Customer customer) throws ApplicationException {
@@ -173,7 +173,7 @@ public class CustomerDao implements ICustomerDao {
 	/**
 	 * This function gets a customer's id, and returns a customer object via searching the db for the 
 	 * customer row which correspondes with that id.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Customer getCustomerById(long customerId) throws ApplicationException {
@@ -228,7 +228,7 @@ public class CustomerDao implements ICustomerDao {
 	/**
 	 * This function returns a collection of all customer objects in the db
 	 * by retrieving all the values and assembling them as Customer objects
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Customer> getAllCustomers() throws ApplicationException {
@@ -283,7 +283,7 @@ public class CustomerDao implements ICustomerDao {
 	
 	/**
 	 * This function checks whether a customer's name and password match those in the db. returns true or false based on result.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public boolean login(String customerName, String password) throws ApplicationException {
@@ -333,7 +333,7 @@ public class CustomerDao implements ICustomerDao {
 	
 	/**
 	 * This function checks if a customer exists by fetching db details according to it's name
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public boolean isCustomerExistByName(String customerName) throws ApplicationException {
 		Connection connection = null;

@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This class provides the basic bean structure of a 'Customer' object,
  * which will be used in higher layers of this program.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 @XmlRootElement
@@ -58,9 +58,4 @@ public class Customer {
 	public String toString() {
 		return "Customer [id=" + id + ", custName=" + custName + ", password=" + password + "]";
 	}
-	
-	
-
-	
-
 }

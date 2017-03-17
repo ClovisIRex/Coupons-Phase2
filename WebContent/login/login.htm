@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="css/login.css" />
+
+
 <div class= "container">
   <div class= "row">
     <div class="col-md-3">
@@ -15,17 +17,14 @@
         <label for="pwd">Password</label>
         <input name="password" type="password" class="form-control" id="pwd">
       </div>
-      <div class="dropdown">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">User Profile
-          <span class="caret"></span></button>
-          <ul ng-model="vm.user.Profile" class="dropdown-menu">
-            <li><a value = "1">Admin</a></li>
-            <li><a value = "2">Company</a></li>
-            <li><a value = "3">Customer</a></li>
-          </ul>
+        <select class="dropdown btn btn-default" id="usrProfile">
+          <option selected disabled>User profile:</option>
+          <option>Admin</option>
+          <option>Company</option>
+          <option>Customer</option>
+        </select>
       <button type="button"  class="loginbutton btn btn-default"  >Login</button>
       <a href="#/register.home" class="btn btn-link">Don't have an account? Register</a>
-    </div>
     </form>
       </div>
     <div class="col-md-3">

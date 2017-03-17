@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This class provides the basic bean structure of a 'PurchaseDetails' object,
  * which will be used in api layer.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 @XmlRootElement
@@ -37,7 +37,4 @@ public class PurchaseDetails {
 	public void setCouponId(long couponId) {
 		this.couponId = couponId;
 	}
-	
-	
-
 }

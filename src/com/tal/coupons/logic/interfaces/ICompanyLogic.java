@@ -10,7 +10,7 @@ import com.tal.coupons.exceptions.ApplicationException;
 /**
  * /**
  * This interface is to be used by the CompanyLogic class, contains method related to companies.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 public interface ICompanyLogic {
 	

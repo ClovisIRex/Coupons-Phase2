@@ -16,7 +16,7 @@ import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * This Dao object is responsible with altering the DB in Company-related columns and tables.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CompanyDao implements ICompanyDao {
@@ -26,7 +26,7 @@ public class CompanyDao implements ICompanyDao {
 
 	/**
 	 * This function creates a new company entry in the db
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void createCompany(Company company) throws ApplicationException {
@@ -90,7 +90,7 @@ public class CompanyDao implements ICompanyDao {
 	
 	/**
 	 * This function deletes a company entry and all its stock coupons in the db.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void removeCompany(long companyID) throws ApplicationException {
@@ -136,7 +136,7 @@ public class CompanyDao implements ICompanyDao {
 	
 	/**
 	 * This function alters details of a company entry in the db
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public void updateCompany(Company company) throws ApplicationException {
@@ -185,7 +185,7 @@ public class CompanyDao implements ICompanyDao {
 	 * This function gets a company id, and returns a company object via searching the db for the 
 	 * company row which correspondes with that id.
 	 * 
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Company getCompanyById(long companyId) throws ApplicationException {
@@ -243,7 +243,7 @@ public class CompanyDao implements ICompanyDao {
 	/**
 	 * This function returns a collection of all company objects in the db
 	 * by retrieving all the values and assembling them as Company objects
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public Collection<Company> getAllCompanies() throws ApplicationException {
@@ -300,7 +300,7 @@ public class CompanyDao implements ICompanyDao {
 	
 	/**
 	 * This function checks whether a company name and password match those in the db. returns true or false based on result.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	@Override
 	public boolean login(String companyName, String password) throws ApplicationException {
@@ -351,7 +351,7 @@ public class CompanyDao implements ICompanyDao {
 	
 	/**
 	 * This function checks if a company exists by fetching db details according to it's name
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public boolean isCompanyExistByName(String companyName) throws ApplicationException {
 		Connection connection = null;

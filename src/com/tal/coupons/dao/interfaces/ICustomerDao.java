@@ -7,7 +7,7 @@ import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * This interface provides methods describing customer-related actions performed on the DB via SQL(dao level).
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 public interface ICustomerDao {

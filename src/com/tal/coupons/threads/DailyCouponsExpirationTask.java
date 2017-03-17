@@ -3,7 +3,7 @@ package com.tal.coupons.threads;
 /**
  * This runnable task is supposed to run once every 24 hours and removes old coupons
  * from the db using the janitor thread.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class DailyCouponsExpirationTask implements Runnable{	

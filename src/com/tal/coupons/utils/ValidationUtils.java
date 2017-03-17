@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Class that contains static method of checking user's input etc.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class ValidationUtils {
@@ -13,7 +13,7 @@ public class ValidationUtils {
 	
 	/**
 	 * This function checks if an email string is valid according to a regex
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public static boolean isEmailValid(String email) {
 		
@@ -30,7 +30,7 @@ public class ValidationUtils {
 	
 	/**
 	 * This function checks if a password string contains upper and lower case, digits,special character, no whitespace and at least 8 chars long according to a regex
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 */
 	public static boolean isPasswordValid(String password) {
 		String PASS_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!$%^&+=])(?=\\S+$).{8,}";

@@ -1,7 +1,7 @@
 package com.tal.coupons.enums;
 /**
  * This enum provides various values for different Errors that can occur throughout the program.
- * @author Tal Livny
+ * @author Sol Invictus
  */
 
 public enum ErrorType {

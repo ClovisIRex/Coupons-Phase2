@@ -13,7 +13,7 @@ import com.tal.coupons.logic.interfaces.ICouponLogic;
 
 /**
  * This Logic class is responsible with Coupon-related actions.
- * @author Tal Livny
+ * @author Sol Invictus
  *
  */
 public class CouponLogic implements ICouponLogic {
@@ -28,7 +28,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function checks for conditions while creating a coupon.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -45,7 +45,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function checks for conditions while removing a coupon from coupons table and purchased coupons.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -65,7 +65,7 @@ public class CouponLogic implements ICouponLogic {
 
 	/**
 	 * This function checks for conditions while updating a coupon's details.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -94,7 +94,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function checks for conditions while a customer purchases a coupon.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -145,7 +145,7 @@ public class CouponLogic implements ICouponLogic {
 
 	/**
 	 * This function gets a list of all coupons by a type.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -159,7 +159,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function gets a list of all coupons by a company's id.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -172,7 +172,7 @@ public class CouponLogic implements ICouponLogic {
 
 	/**
 	 * This function gets a list of all coupons by a customer's id.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -186,7 +186,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function gets a list of all coupons.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -200,7 +200,7 @@ public class CouponLogic implements ICouponLogic {
 	
 	/**
 	 * This function gets a list of all purchased coupons by type.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -213,7 +213,7 @@ public class CouponLogic implements ICouponLogic {
 
 	/**
 	 * This function gets a list of all purchased coupons by price.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
@@ -226,7 +226,7 @@ public class CouponLogic implements ICouponLogic {
 
 	/**
 	 * This function gets a list of all purchased coupons.
-	 * @author Tal Livny
+	 * @author Sol Invictus
 	 * @throws ApplicationException
 	 */
 	@Override
