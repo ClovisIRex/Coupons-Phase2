@@ -18,7 +18,9 @@ import sun.font.CreatedFontTracker;
 * @author Sol Invictus
 *
 */
-@Path("/register")
+
+/**
+ * @Path("/register")
 @Consumes(MediaType.APPLICATION_JSON)
 public class RegisterApi {
 	
@@ -39,8 +41,12 @@ public class RegisterApi {
 	
 	
 	
-	
-	
-	
-	
 }
+
+ *
+ */
+
+	
+	
+	
+	

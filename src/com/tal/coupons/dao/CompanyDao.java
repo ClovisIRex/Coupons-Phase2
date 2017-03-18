@@ -394,5 +394,55 @@ public class CompanyDao implements ICompanyDao {
 		
 		return true;
 	}
+	
+	/**
+	 * This function gets a company name, and returns a company object id searching the db for the 
+	 * id which corresponds with that name.
+	 * 
+	 * @author Sol Invictus
+	 */
+	
+	public long getIdByCompanyName(String companyName) throws ApplicationException {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		long companyId = -1;
+		
+		
+		try 
+		{
+			// Getting a connection from the connections manager (getConnection is a static method)
+			connection = JdbcUtils.getConnection();
+			
+			//creating the SQL query
+			
+			String sql = "SELECT COMPANY_ID FROM companies WHERE COMPANY_NAME = ?";
+
+			// Creating a statement object which holds the SQL we're about to execute
+			preparedStatement = connection.prepareStatement(sql);
+
+			// Replacing question mark with their companyID
+			preparedStatement.setLong(1, companyId);
+			
+			// executing query, putting result returned by the function in resultSet
+			resultSet = preparedStatement.executeQuery(); 
+			
+			// extracting data
+			companyId = resultSet.getLong("COMPANY_ID");
+		    
+		} 
+		
+		catch (SQLException e) 
+		{
+			throw new ApplicationException(ErrorType.DAO_GET_ERROR, e, "Failed to get due to :" + e.getMessage());
+		} 
+		finally 
+		{
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+		
+		return companyId;
+	}
 
 }

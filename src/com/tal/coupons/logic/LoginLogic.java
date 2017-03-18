@@ -12,12 +12,14 @@ public class LoginLogic implements ILoginLogic {
 
 	/**
 	 * This function performs a login to to system by verifying the user's credentials according to its profile
+	 * and returns it's login id
 	 * @author Sol Invictus
 	 * @throws ApplicationException 
 	 */
 	@Override
-	public boolean login(String username, String password, UserProfile clientType) throws ApplicationException {
+	public long login(String username, String password, UserProfile clientType) throws ApplicationException {
 		
+		long userID;
 		boolean isloginSuccessful = false;
 		
 		if (clientType == UserProfile.COMPANY) {
@@ -25,13 +27,17 @@ public class LoginLogic implements ILoginLogic {
 			CompanyDao companyDao = new CompanyDao();
 			isloginSuccessful = companyDao.login(username, password);
 			
+			
 			if(!isloginSuccessful) {
 				throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "Failed to login. One or more fields do not match,"
 						+ " or the company does not exist");
 			}
 			
+			userID = companyDao.getIdByCompanyName(username);
+			
 			System.out.println("Company user: " + username + " has logged in!");
-			return isloginSuccessful;
+			
+			return userID;
 		} 
 		
 		else if (clientType == UserProfile.CUSTOMER) {
@@ -44,12 +50,13 @@ public class LoginLogic implements ILoginLogic {
 						+ " or the customer does not exist");
 			}
 			
+			userID = customerDao.getIdByCustomerName(username);
+			
 			System.out.println("Customer user: " + username + " has logged in!");
-			return isloginSuccessful;
+			return userID;
 		}
 		
 		else { 
-			System.out.println(UserProfile.CUSTOMER);
 			throw new ApplicationException(ErrorType.LOGIN_PROFILE_INVALID, null, "Invalid user profile- only customer or company allowed.");
 		}
 		

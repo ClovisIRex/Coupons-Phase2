@@ -5,7 +5,7 @@ import com.tal.coupons.exceptions.ApplicationException;
 /**
  * This enum provides 3 levels of the system's user DB permissions to be used later on, identified by different id's:
  * 
- * 	ADMINISTARTOR(ID 1) - can modify the lists of companies and customers
+ * 	ADMINISTRATOR(ID 1) - can modify the lists of companies and customers
  * 	COMPANY(ID 2) - Can modify lists of coupons of his own company
  * 	CUSTOMER(ID 3) - Can only purchase coupons
  *  @author Sol Invictus

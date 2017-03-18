@@ -1,7 +1,13 @@
 package com.tal.coupons.utils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.tal.coupons.enums.ErrorType;
+import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * Class that contains static method of checking user's input etc.
@@ -38,6 +44,27 @@ public class ValidationUtils {
 		Matcher matcher = pattern.matcher(password);
 		
 		return matcher.matches();
+	}
+	
+	/**
+	 * hashes a string with sha256
+	 * @param data
+	 * @return hashedData
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public static String sha256(String data) throws ApplicationException {
+		MessageDigest digest;
+		byte[] hashedData = null;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+			hashedData = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+			
+		} catch (NoSuchAlgorithmException e) {
+			throw new ApplicationException(ErrorType.GENERAL_ERROR, null, e.getMessage());
+		}
+		
+		
+		return hashedData.toString();
 	}
 
 }

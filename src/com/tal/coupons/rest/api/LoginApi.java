@@ -10,11 +10,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.servlet.http.Cookie;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
 import com.tal.coupons.logic.LoginLogic;
 import com.tal.coupons.rest.beans.LoginDetails;
+import com.tal.coupons.utils.CookieUtil;
 
 /**
 * This class provides a RESTful API for UsersLogic.
@@ -26,21 +29,27 @@ import com.tal.coupons.rest.beans.LoginDetails;
 public class LoginApi {
 
 	@POST
-	public boolean login(@Context HttpServletRequest request, @Context HttpServletResponse response,LoginDetails details) throws ApplicationException {
+	public Response login(@Context HttpServletRequest request,LoginDetails details) throws ApplicationException {
 		
+		// first we get all params from the http request
 		String username = details.getUsername();
 		String password = details.getPassword();
-		UserProfile userType = UserProfile.getProfilebyValue(details.getClientType());
+		int userTypeID = details.getClientType();
 		
+		UserProfile userType = UserProfile.getProfilebyValue(userTypeID);
+		
+		// then we test login to see if the user has send valid params
 		LoginLogic loginLogic = new LoginLogic();
-		boolean isLoginSuccessfull = loginLogic.login(username,password, userType);
+		long logonID = loginLogic.login(username,password, userType);
 
-		if(isLoginSuccessfull) {
+		// if all is right we create a session, attach it with a new cookie and give back to the client
+		if(logonID != -1) {
 			HttpSession session = request.getSession();
-			
+			NewCookie sessionCookie = CookieUtil.createSessionCookie(logonID, userTypeID);
+			return Response.status(Response.Status.OK).cookie(sessionCookie).build();
 		}
-		return isLoginSuccessfull;
-
+		else {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 	}
-
 }

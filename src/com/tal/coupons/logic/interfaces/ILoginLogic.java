@@ -10,6 +10,6 @@ import com.tal.coupons.exceptions.ApplicationException;
  */
 public interface ILoginLogic {
 	
-	public boolean login(String username, String password,UserProfile clientType) throws ApplicationException;
+	public long login(String username, String password,UserProfile clientType) throws ApplicationException;
 
 }

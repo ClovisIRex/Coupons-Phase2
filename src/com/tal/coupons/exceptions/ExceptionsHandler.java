@@ -12,7 +12,8 @@ import com.tal.coupons.exceptions.beans.ErrorBean;
  * @author Tal Livny
  *
  */
-@Provider
+/**
+ * @Provider
 public class ExceptionsHandler extends Exception implements ExceptionMapper<Throwable> 
 {
     @Override
@@ -40,3 +41,7 @@ public class ExceptionsHandler extends Exception implements ExceptionMapper<Thro
         return Response.status(500).entity("General failure").build();
     }
 }
+
+ * @author Sol Invictus
+ *
+ */
