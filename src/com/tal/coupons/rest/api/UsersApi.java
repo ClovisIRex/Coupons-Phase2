@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
-import com.tal.coupons.logic.LoginLogic;
+import com.tal.coupons.logic.UsersLogic;
 import com.tal.coupons.rest.beans.LoginDetails;
 import com.tal.coupons.utils.CookieUtil;
 
@@ -26,7 +26,7 @@ import com.tal.coupons.utils.CookieUtil;
 */
 @Path("/login")
 @Consumes(MediaType.APPLICATION_JSON)
-public class LoginApi {
+public class UsersApi {
 
 	@POST
 	public Response login(@Context HttpServletRequest request,LoginDetails details) throws ApplicationException {
@@ -39,8 +39,8 @@ public class LoginApi {
 		UserProfile userType = UserProfile.getProfilebyValue(userTypeID);
 		
 		// then we test login to see if the user has send valid params
-		LoginLogic loginLogic = new LoginLogic();
-		long logonID = loginLogic.login(username,password, userType);
+		UsersLogic usersLogic = new UsersLogic();
+		long logonID = usersLogic.login(username,password, userType);
 
 		// if all is right we create a session, attach it with a new cookie and give back to the client
 		if(logonID != -1) {

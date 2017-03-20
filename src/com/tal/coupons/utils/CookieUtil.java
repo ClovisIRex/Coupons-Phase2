@@ -6,9 +6,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 
+import com.tal.coupons.dao.CompanyDao;
+import com.tal.coupons.dao.CustomerDao;
 import com.tal.coupons.enums.ErrorType;
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
@@ -24,7 +29,8 @@ import com.tal.coupons.rest.beans.LoginDetails;
 public class CookieUtil {
 	
 	/**
-	 * gets users params, hashes them and returns the cookie in format hashed_id:hashed_typeid
+	 * gets users params, hashes and encodes them and returns the cookie with the in format;
+	 * Name:"couponSession" value(token):hashed_id-hashed_typeid
 	 * @param userType
 	 * @param userID
 	 * @return NewCookie
@@ -36,53 +42,111 @@ public class CookieUtil {
 		String typeCookieValue = String.valueOf(userTypeId);
 		NewCookie sessionCookie = null;
 		
-		String encodedUserId = Base64.getEncoder().encode(idCookieValue.getBytes()).toString();
-
-		sessionCookie = new NewCookie(encodedUserId,
-				ValidationUtils.sha256(typeCookieValue));
 		
+		String hashedCookieUserType = ValidationUtils.sha256(typeCookieValue);
+		
+		String cookieValue = idCookieValue + "-" + hashedCookieUserType;
+		String base64CookieValue = new String(Base64.getEncoder().encode(cookieValue.getBytes()));
+		
+		sessionCookie = new NewCookie("couponSession",base64CookieValue);
+		System.out.println("cookie: " + sessionCookie.toString());
+		System.out.println("name: " + sessionCookie.getName());
+		System.out.println("value: " + sessionCookie.getValue());
 		return sessionCookie;
 	}
 	
 	/**
-	 * gets a session cookie, parses it, queries the DB and returns if the user exists. 
-	 * @param sessioncookie
+	 * get the sessionCookie of the coupons system from a array of cookies.
+	 * @param cookies
+	 * @return sessionCookie
+	 */
+	public static Cookie getSessionCookie(Cookie[] cookies) {
+		Map<String, Cookie> cookieMap = new HashMap<>();
+		for (Cookie cookie : cookies) {
+		    cookieMap.put(cookie.getName(), cookie);
+		}
+		Cookie sessionCookie = cookieMap.get("couponsSessionCookie");
+		
+		return sessionCookie;		
+	}
+	
+	/**
+	 * gets a session cookie's text, parses it, queries the DB and returns token containing the
+	 *  user's id and profile type if the user exists. 
+	 * @param sessionCookie
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public static boolean verifySessionCookie(NewCookie sessioncookie) throws ApplicationException { 
+	public static Map<String,UserProfile> verifySessionCookie(Cookie sessionCookie) throws ApplicationException {
 		
-		long userID = Long.parseLong(Base64.getDecoder().decode(sessioncookie.getName().getBytes()).toString());
-		String hashedUserTypeIDfromCookie = sessioncookie.getValue();
+		// cookie parsing by "-" delimiter
+		String codedCookieValue = sessionCookie.getValue();
+		String decodedCookieValue = new String(Base64.getDecoder().decode(codedCookieValue.getBytes()));
 		
+		String[] cookieSplitArray = decodedCookieValue.split("-");
+		long userID = Long.parseLong(cookieSplitArray[0]);
+		String hashedUserTypeIDfromCookie = cookieSplitArray[1];
 		
-		
+		/*
+		 *  hashing all usertype id's and preparing data structs to hold them and
+		 *  to map them to their hashed values
+		 */
 		UserProfile [] userProfiles = UserProfile.values();
-		ArrayList<String> hashedUserProfileIds = new ArrayList<String>();
+		Map<String, UserProfile> profileHashMap = new HashMap<String, UserProfile>();
 		
-		for(UserProfile profile : userProfiles) {
-			String hashedProfileID = ValidationUtils.sha256(String.valueOf(profile.getUserType()));
-			hashedUserProfileIds.add(hashedProfileID);
-		}
-		
-		//means the user has a company UsertypeID
-		if(hashedUserTypeIDfromCookie == hashedUserProfileIds.get(1)) {
+		/*
+		 * we iterate through all the profiles, hash heir values and map them
+		 */
+		for(int i=0; i <= userProfiles.length; i++) {
+			String profileID = String.valueOf(userProfiles[i].getUserType());
+			String hashedProfileID = ValidationUtils.sha256(profileID);
 			
-			CompanyLogic companyLogic = new CompanyLogic();
-			if(companyLogic.getCompanyById(userID) != null){
-				return true;
-			};
-		}
-		
-		//means the user has a customer UsertypeID
-		if(hashedUserTypeIDfromCookie == hashedUserProfileIds.get(2)) {
+			profileHashMap.put(hashedProfileID,userProfiles[i]);
 
-			CustomerLogic customerLogic = new CustomerLogic();
-			if(customerLogic.getCustomerById(userID) != null){
-				return true;
-			};
+		/*
+		 * now we proceed to query the db for the validity of the user's id ONLY if the cookie seems
+		 *  valid-profile wise in order to save redundant db
+		 * queries which are precious in resources and memory.
+		   the puropse is that we don't want a company/customer to be able to modify or access
+		   a different company/customer db data when using Cookieutil's service in other api classes.
+		 */
+			if(hashedProfileID.equals(hashedUserTypeIDfromCookie)) {
+				
+				/*
+				 * we get the current profile from the map we had prepared earlier and prepare a token to be
+				 *  returned to the client only if he exists in the db.
+				 */
+				UserProfile currentProfile = profileHashMap.get(hashedProfileID);
+				Map<String,UserProfile> token = new HashMap<String,UserProfile>();
+				token.put(String.valueOf(userID),UserProfile.getProfilebyValue(i+1));
+
+				
+				// if it's admin we don't need to query the db because he's not in the tables(BAD DB DESIGN)
+				switch(currentProfile) {
+					case ADMINISTRATOR: {
+						return token;
+				}
+					case COMPANY: {
+						CompanyDao companyDao = new CompanyDao();
+						if(companyDao.isCompanyExistByID(userID)) {
+							return token;
+						};
+					}
+					
+					case CUSTOMER: {
+						CustomerDao customerDao = new CustomerDao();
+						if(customerDao.isCustomerExistByID(userID)) {
+							return token;
+						};
+					}			
+				}
+			}
 		}
 		
-		return false;
+		/*
+		 * if anything fails along the way, we will not give a
+		 *  token back to the client so he will be forced to login legally w/o tricks.
+		 */
+		return null;
 	}
 }

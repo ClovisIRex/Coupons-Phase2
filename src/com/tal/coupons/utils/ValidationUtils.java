@@ -57,14 +57,19 @@ public class ValidationUtils {
 		byte[] hashedData = null;
 		try {
 			digest = MessageDigest.getInstance("SHA-256");
-			hashedData = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+			digest.update(data.getBytes());
+			hashedData = digest.digest();
 			
 		} catch (NoSuchAlgorithmException e) {
 			throw new ApplicationException(ErrorType.GENERAL_ERROR, null, e.getMessage());
 		}
+		StringBuffer stringifiedHasedData = new StringBuffer();
+		for (int i = 0; i < hashedData.length; i++) {
+			stringifiedHasedData.append(Integer.toString((hashedData[i] & 0xff) + 0x100, 16).substring(1));
+	        }
 		
 		
-		return hashedData.toString();
+		return stringifiedHasedData.toString();
 	}
 
 }

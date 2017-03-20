@@ -396,6 +396,52 @@ public class CompanyDao implements ICompanyDao {
 	}
 	
 	/**
+	 * This function checks if a company exists by fetching db details according to it's id
+	 * @author Sol Invictus
+	 */
+	public boolean isCompanyExistByID(long companyID) throws ApplicationException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try 
+		{
+			// Getting a connection from the connections manager (getConnection is a static method)
+			connection = JdbcUtils.getConnection();
+			
+			//creating the SQL query
+			
+			String sql = "SELECT * FROM companies WHERE COMPANY_ID = ?";
+
+			// Creating a statement object which holds the SQL we're about to execute
+			preparedStatement = connection.prepareStatement(sql);
+
+			// Replacing question mark with their couponID
+			preparedStatement.setLong(1, companyID);
+			
+			// executing query, putting result returned by the function in resultSet
+			resultSet = preparedStatement.executeQuery(); 
+			
+			//If no results were found in the db, our function will return false
+			if(!resultSet.next()) {
+				return false;
+			}
+			
+		} 
+		
+		catch (SQLException e) 
+		{
+			throw new ApplicationException(ErrorType.DAO_GET_ERROR, e, "Failed to get due to :" + e.getMessage());
+		} 
+		finally 
+		{
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * This function gets a company name, and returns a company object id searching the db for the 
 	 * id which corresponds with that name.
 	 * 

@@ -5,9 +5,9 @@ import com.tal.coupons.dao.CustomerDao;
 import com.tal.coupons.enums.ErrorType;
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
-import com.tal.coupons.logic.interfaces.ILoginLogic;
+import com.tal.coupons.logic.interfaces.IUsersLogic;
 
-public class LoginLogic implements ILoginLogic {
+public class UsersLogic implements IUsersLogic {
 
 
 	/**
@@ -21,6 +21,23 @@ public class LoginLogic implements ILoginLogic {
 		
 		long userID;
 		boolean isloginSuccessful = false;
+		
+		if (clientType == UserProfile.ADMINISTRATOR) {
+
+			if(username.equals("admin") && password.equals("1234")) {
+				isloginSuccessful = true;
+				userID = 0;
+			}
+
+			else {
+				throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "Failed to login. One or more fields do not match,"
+						+ " or the admin does not exist");
+			}
+
+			System.out.println("Admin user: " + username + " has logged in!");
+
+			return userID;
+		} 
 		
 		if (clientType == UserProfile.COMPANY) {
 			
@@ -57,7 +74,7 @@ public class LoginLogic implements ILoginLogic {
 		}
 		
 		else { 
-			throw new ApplicationException(ErrorType.LOGIN_PROFILE_INVALID, null, "Invalid user profile- only customer or company allowed.");
+			throw new ApplicationException(ErrorType.LOGIN_PROFILE_INVALID, null, "Invalid user profile- only admin, customer or company allowed.");
 		}
 		
 	}

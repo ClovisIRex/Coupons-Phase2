@@ -5,10 +5,10 @@ import com.tal.coupons.exceptions.ApplicationException;
 
 /**
  * /**
- * This interface is to be used by the LoginLogic.
+ * This interface is to be used by the UsersLogic.
  * @author Sol Invictus
  */
-public interface ILoginLogic {
+public interface IUsersLogic {
 	
 	public long login(String username, String password,UserProfile clientType) throws ApplicationException;
 
