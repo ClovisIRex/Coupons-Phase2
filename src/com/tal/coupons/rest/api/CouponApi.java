@@ -2,8 +2,10 @@ package com.tal.coupons.rest.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 
 import com.tal.coupons.beans.Company;
@@ -18,10 +21,12 @@ import com.tal.coupons.beans.Coupon;
 import com.tal.coupons.beans.Customer;
 import com.tal.coupons.beans.PurchaseDetails;
 import com.tal.coupons.enums.CouponType;
+import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
 import com.tal.coupons.logic.CompanyLogic;
 import com.tal.coupons.logic.CouponLogic;
 import com.tal.coupons.logic.CustomerLogic;
+import com.tal.coupons.utils.CookieUtil;
 
 /**
  * This class provides a RESTful API for the 'coupon' resource.
@@ -34,8 +39,8 @@ import com.tal.coupons.logic.CustomerLogic;
 public class CouponApi {
 	
 	@POST
-	public void createCoupon(Coupon coupon) throws ApplicationException {
-		
+	public void createCoupon(@CookieParam("couponSession") Cookie cookie,Coupon coupon) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
 		CouponLogic couponLogic = new CouponLogic();
 		couponLogic.createCoupon(coupon);
 	}

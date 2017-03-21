@@ -35,7 +35,7 @@ import com.tal.coupons.utils.CookieUtil;
 public class CompanyApi {
 	
 	@POST
-	public void createCompany(@CookieParam("couponSession") Cookie cookie, @Context HttpServletRequest request,Company company) throws ApplicationException {
+	public void createCompany(@CookieParam("couponSession") Cookie cookie,Company company) throws ApplicationException {
 		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
 		CompanyLogic compLogic = new CompanyLogic();
 		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 

@@ -453,14 +453,16 @@ public class CustomerDao implements ICustomerDao {
 			preparedStatement = connection.prepareStatement(sql);
 
 			// Replacing question mark with their companyID
-			preparedStatement.setLong(1, customerId);
+			preparedStatement.setString(1, customerName);
 			
 			// executing query, putting result returned by the function in resultSet
 			resultSet = preparedStatement.executeQuery(); 
 			
 			// extracting data
-			customerId = resultSet.getLong("CUSTOMER_ID");
-		    
+			if(resultSet.next()) {
+				customerId = resultSet.getLong("CUSTOMER_ID");
+			}
+			    
 		} 
 		
 		catch (SQLException e) 

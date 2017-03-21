@@ -4,11 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.servlet.http.Cookie;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -42,7 +44,7 @@ public class UsersApi {
 		UsersLogic usersLogic = new UsersLogic();
 		long logonID = usersLogic.login(username,password, userType);
 
-		// if all is right we create a session, attach it with a new cookie and give back to the client
+		// if all is right we create a session and a new cookie and give back to the client
 		if(logonID != -1) {
 			HttpSession session = request.getSession();
 			NewCookie sessionCookie = CookieUtil.createSessionCookie(logonID, userTypeID);
@@ -52,4 +54,20 @@ public class UsersApi {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 	}
+	
+	@GET
+	public Response logout(@CookieParam("couponSession") Cookie cookie, @Context HttpServletRequest request) throws ApplicationException {
+		
+		NewCookie logoutCookie = new NewCookie(cookie,"couponsLogout",0,false);
+	
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			session.invalidate();
+			return Response.status(Response.Status.OK).cookie(logoutCookie).build();
+		}
+	
+		return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+	}
+	
 }

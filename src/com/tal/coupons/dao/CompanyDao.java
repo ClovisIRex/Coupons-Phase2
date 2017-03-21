@@ -469,13 +469,16 @@ public class CompanyDao implements ICompanyDao {
 			preparedStatement = connection.prepareStatement(sql);
 
 			// Replacing question mark with their companyID
-			preparedStatement.setLong(1, companyId);
+			preparedStatement.setString(1, companyName);
 			
 			// executing query, putting result returned by the function in resultSet
 			resultSet = preparedStatement.executeQuery(); 
 			
 			// extracting data
-			companyId = resultSet.getLong("COMPANY_ID");
+			if(resultSet.next()) {
+				companyId = resultSet.getLong("COMPANY_ID");
+			}
+			
 		    
 		} 
 		

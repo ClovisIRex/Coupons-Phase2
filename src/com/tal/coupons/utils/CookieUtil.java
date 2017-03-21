@@ -65,9 +65,21 @@ public class CookieUtil {
 		for (Cookie cookie : cookies) {
 		    cookieMap.put(cookie.getName(), cookie);
 		}
-		Cookie sessionCookie = cookieMap.get("couponsSessionCookie");
+		Cookie sessionCookie = cookieMap.get("couponSession");
 		
 		return sessionCookie;		
+	}
+	/**
+	 * removes the sessionCookie of the coupons system from a array of cookies.
+	 * @param cookies
+	 */
+	public static void removeSessionCookie(Cookie[] cookies) {
+		Map<String, Cookie> cookieMap = new HashMap<>();
+		for (Cookie cookie : cookies) {
+		    cookieMap.put(cookie.getName(), cookie);
+		}
+		Cookie sessionCookie = cookieMap.get("couponsSessionCookie");
+			
 	}
 	
 	/**
