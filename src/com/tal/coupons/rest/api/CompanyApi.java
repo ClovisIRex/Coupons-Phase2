@@ -33,92 +33,93 @@ import com.tal.coupons.utils.CookieUtil;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CompanyApi {
-	
+
 	@POST
 	public void createCompany(@CookieParam("couponSession") Cookie cookie,Company company) throws ApplicationException {
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		CompanyLogic compLogic = new CompanyLogic();
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
 		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+			CompanyLogic compLogic = new CompanyLogic();
 			compLogic.createCompany(company);
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
 		}
-		else {
-			throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "invalid cookie or unauthorized use with cookie");
-		}
-		
+
 	}
-	
-	
-	
+
+
+
 	@DELETE
 	@Path("/{id}/")
 	public void removeCompany(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long companyID) throws ApplicationException {
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		CompanyLogic compLogic = new CompanyLogic();
-		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
-			compLogic.removeCompany(companyID);
-		}
-		else {
-			throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "invalid cookie or unauthorized use with cookie");
-		}
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
+		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+			CompanyLogic compLogic = new CompanyLogic();
+			compLogic.removeCompany(companyID);
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+
+
 	}
-	
-	
+
+
 	@PUT
 	public void updateCompany(@CookieParam("couponSession") Cookie cookie, Company company) throws ApplicationException {
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		CompanyLogic compLogic = new CompanyLogic();
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
-		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
+				(token.containsValue(UserProfile.COMPANY) &&
+						token.containsKey(String.valueOf((company.getId()))))) {
+			CompanyLogic compLogic = new CompanyLogic();
 			compLogic.updateCompany(company.getId(),company.getPassword(),company.getEmail());
+
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
 		}
-		if(token.containsValue(UserProfile.COMPANY) && token.containsKey(String.valueOf((company.getId())))) {
-			compLogic.updateCompany(company.getId(),company.getPassword(),company.getEmail());
-		}
-		else {
-			throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "invalid cookie or unauthorized use with cookie");
-		}
-		
+
 	}
-	
-	
-	
+
+
+
 	@GET
 	@Path("/{id}/")
 	public Company getCompany(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long companyID) throws ApplicationException {
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		CompanyLogic compLogic = new CompanyLogic();
-		
-		if(token.containsValue(UserProfile.ADMINISTRATOR)) {
+		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
+				(token.containsValue(UserProfile.COMPANY) &&
+						token.containsKey(String.valueOf((companyID))))) {	
+			CompanyLogic compLogic = new CompanyLogic();
 			Company company = compLogic.getCompanyById(companyID);
-			return company;
 			
-		}
-		if(token.containsValue(UserProfile.COMPANY) && token.containsKey(String.valueOf((companyID)))) {
-			Company company = compLogic.getCompanyById(companyID);
 			return company;
-		}
-		else {
-			throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "invalid cookie or unauthorized use with cookie");
+
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
 		}
 	}
 
-	
+
 	@GET
 	public Collection<Company> getAllCompanies(@CookieParam("couponSession") Cookie cookie) throws ApplicationException {
-		
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
 		if(token.containsValue(UserProfile.ADMINISTRATOR)) {
-			
+
 			CompanyLogic compLogic = new CompanyLogic();
 			ArrayList<Company> companies = (ArrayList<Company>) compLogic.getAllCompanies();
-			
+
 			return companies;
-			
+
 		} else {
-			throw new ApplicationException(ErrorType.LOGIN_SECURITY_FAILURE, null, "invalid cookie");
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie");
 		}
 	}	
 }

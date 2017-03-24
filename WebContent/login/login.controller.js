@@ -3,6 +3,7 @@
 
   var app = angular.module("SolInvictus");
   app.controller('LoginController',LoginController);
+  n
 
   LoginController.$inject = ['LoginService']
   function LoginController(LoginService) {

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 
 import com.tal.coupons.beans.Coupon;
+import com.tal.coupons.dao.CompanyDao;
 import com.tal.coupons.dao.CouponDao;
 import com.tal.coupons.enums.CouponType;
 import com.tal.coupons.enums.ErrorType;
@@ -16,6 +17,10 @@ import com.tal.coupons.logic.interfaces.ICouponLogic;
  * @author Sol Invictus
  *
  */
+
+
+//TODO filter by couponType
+
 public class CouponLogic implements ICouponLogic {
 	
 	
@@ -36,11 +41,18 @@ public class CouponLogic implements ICouponLogic {
 		if(couponDao.isCouponExistByTitle(coupon.getCouponTitle())) {
 			throw new ApplicationException(ErrorType.COUPON_NAME_ALREADY_EXISTS,null,"Cannot create coupon because the coupon's name already exists. Try a different name.");
 		}
+		
+		if(!CouponType.isCouponTypeExist(coupon.getCouponType())) {
+			throw new ApplicationException(ErrorType.COUPON_TYPE_INVALID,null,"Invalid coupon type");
+		}
+		
+		CompanyDao companyDao = new CompanyDao();
+		if(!companyDao.isCompanyExistByID(coupon.getCompanyID())) {
+			throw new ApplicationException(ErrorType.COMPANY_DOESNT_EXIST,null,"Invalid company ID");
+		}
 
 		couponDao.createCoupon(coupon);
 		System.out.println("Coupon: " + coupon.toString() + " Has been created!");
-		
-		
 	}
 	
 	/**

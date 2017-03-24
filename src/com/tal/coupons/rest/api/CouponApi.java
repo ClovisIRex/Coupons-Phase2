@@ -21,6 +21,7 @@ import com.tal.coupons.beans.Coupon;
 import com.tal.coupons.beans.Customer;
 import com.tal.coupons.beans.PurchaseDetails;
 import com.tal.coupons.enums.CouponType;
+import com.tal.coupons.enums.ErrorType;
 import com.tal.coupons.enums.UserProfile;
 import com.tal.coupons.exceptions.ApplicationException;
 import com.tal.coupons.logic.CompanyLogic;
@@ -37,117 +38,198 @@ import com.tal.coupons.utils.CookieUtil;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CouponApi {
-	
+
 	@POST
 	public void createCoupon(@CookieParam("couponSession") Cookie cookie,Coupon coupon) throws ApplicationException {
-		Map<String,UserProfile> token = CookieUtil.verifySessionCookie(cookie);
-		CouponLogic couponLogic = new CouponLogic();
-		couponLogic.createCoupon(coupon);
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
+				(token.containsValue(UserProfile.COMPANY) &&
+						token.containsKey(String.valueOf((coupon.getCompanyID()))))) { 
+			CouponLogic couponLogic = new CouponLogic();
+			couponLogic.createCoupon(coupon);		
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
+
 	@DELETE
 	@Path("/{id}/")
-	public void removeCoupon(@PathParam("id") long couponID) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		couponLogic.removeCoupon(couponID);
+	public void removeCoupon(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long couponID) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
+				(token.containsValue(UserProfile.COMPANY) &&
+						token.containsKey(String.valueOf((couponID))))) {
+			CouponLogic couponLogic = new CouponLogic();
+			couponLogic.removeCoupon(couponID);
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
+
 	@PUT
-	public void updateCoupon(Coupon coupon) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		couponLogic.updateCoupon(coupon.getCouponId(),coupon.getCouponPrice(),
-								 coupon.getCouponEndDate());
+	public void updateCoupon(@CookieParam("couponSession") Cookie cookie,Coupon coupon) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
+				(token.containsValue(UserProfile.COMPANY) &&
+						token.containsKey(String.valueOf((coupon.getCompanyID()))))) {
+			CouponLogic couponLogic = new CouponLogic();
+			couponLogic.updateCoupon(coupon.getCouponId(),coupon.getCouponPrice(),
+					coupon.getCouponEndDate());
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
-	
+
+
 	@POST
 	@Path("/purchase/")
-	public void purchaseCoupon(PurchaseDetails details) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		couponLogic.purchaseCoupon(details.getCustomerId(), details.getCouponId());
+	public void purchaseCoupon(@CookieParam("couponSession") Cookie cookie,PurchaseDetails details) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token != null) {
+			for(UserProfile profile : UserProfile.values() ) {
+				if(token.containsValue(profile)) {
+					CouponLogic couponLogic = new CouponLogic();
+					couponLogic.purchaseCoupon(details.getCustomerId(), details.getCouponId());
+				}
+			}
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+
+
 	}
-	
+
 	@GET
 	@Path("/{type}/")
-	public Collection<Coupon> getCouponsByType(@PathParam("type") String couponType) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getCouponsByType(CouponType.valueOf(couponType.toUpperCase()));
-		
-		return coupons;
+	public Collection<Coupon> getCouponsByType(@CookieParam("couponSession") Cookie cookie, @PathParam("type") String couponType) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token != null) { 
+			for(UserProfile profile : UserProfile.values() ) {
+				if(token.containsValue(profile)) {
+					CouponLogic couponLogic = new CouponLogic();
+					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+							couponLogic.getCouponsByType(CouponType.valueOf(couponType.toUpperCase())); 
+
+					return coupons;
+				}
+			}
+
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+		return null;
+
 	}
-	
-	
+
+
 	@GET
 	@Path("/CompanyId/{id}/")
-	public Collection<Coupon> getCouponsByCompanyId(@PathParam("id") long companyId) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getCouponsByCompanyId(companyId);
-		
-		return coupons;
+	public Collection<Coupon> getCouponsByCompanyId(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long companyId) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token != null) { 
+			for(UserProfile profile : UserProfile.values() ) { 
+				if(token.containsValue(profile)) { 
+					CouponLogic couponLogic = new CouponLogic();
+					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+							couponLogic.getCouponsByCompanyId(companyId);
+
+					return coupons;
+				}
+			}
+		}  else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+		return null;		
 	}
-	
+
 	@GET
 	@Path("/CustomerId/{id}/")
-	public Collection<Coupon> getCouponsByCustomerId(@PathParam("id") long customerId) throws ApplicationException {
+	public Collection<Coupon> getCouponsByCustomerId(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long customerId) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getCouponsByCustomerId(customerId);
-		
-		return coupons;
+		if(token != null) { 
+			for(UserProfile profile : UserProfile.values() ) { 
+				if(token.containsValue(profile)) { 
+					CouponLogic couponLogic = new CouponLogic();
+					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+							couponLogic.getCouponsByCustomerId(customerId);
+					return coupons;
+				}
+			}
+		}  else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+		return null;
 	}
-	
+
 	@GET
-	public Collection<Coupon> getAllCoupons() throws ApplicationException {
+	public Collection<Coupon> getAllCoupons(@CookieParam("couponSession") Cookie cookie) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getAllCoupons();
-		
-		return coupons;
+		if(token.containsValue(UserProfile.ADMINISTRATOR)) {
+			CouponLogic couponLogic = new CouponLogic();
+			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+					couponLogic.getAllCoupons();
+			return coupons;
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
+
 	@GET
 	@Path("/purchase/type/{type}/")
-	public Collection<Coupon> getAllPurchasedCouponsbyType(
+	public Collection<Coupon> getAllPurchasedCouponsbyType(@CookieParam("couponSession") Cookie cookie,
 			@PathParam("type")
 			String couponType) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getAllPurchasedCouponsByType(CouponType.valueOf(couponType.toUpperCase()));
-		
-		return coupons;
+		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+			CouponLogic couponLogic = new CouponLogic();
+			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+					couponLogic.getAllPurchasedCouponsByType(CouponType.valueOf(couponType.toUpperCase()));
+			return coupons;
+
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
+
 	@GET
 	@Path("/purchase/price/{price}/")
 	public Collection<Coupon> getAllPurchasedCouponsbyPrice(
-			@PathParam("price")
+			@CookieParam("couponSession") Cookie cookie, @PathParam("price") 
 			double couponPrice) throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getAllPurchasedCouponsByPrice(couponPrice);
-		
-		return coupons;
+
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+			CouponLogic couponLogic = new CouponLogic();
+			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+					couponLogic.getAllPurchasedCouponsByPrice(couponPrice);
+
+			return coupons;
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
-	
+
 	@GET
 	@Path("/purchase/")
-	public Collection<Coupon> getAllPurchasedCoupons() throws ApplicationException {
-		
-		CouponLogic couponLogic = new CouponLogic();
-		ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
-				couponLogic.getAllPurchasedCoupons();
-		
-		return coupons;
+	public Collection<Coupon> getAllPurchasedCoupons(@CookieParam("couponSession") Cookie cookie) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+		if(token.containsValue(UserProfile.ADMINISTRATOR)) { 
+			CouponLogic couponLogic = new CouponLogic();
+			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+					couponLogic.getAllPurchasedCoupons();
+
+			return coupons;
+		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
 	}
 }

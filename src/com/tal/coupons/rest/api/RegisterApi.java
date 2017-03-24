@@ -20,7 +20,6 @@ import sun.font.CreatedFontTracker;
  *
  */
 
-
 @Path("/register")
 @Consumes(MediaType.APPLICATION_JSON)
 public class RegisterApi {

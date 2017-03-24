@@ -60,12 +60,12 @@ public class CookieUtil {
 	 * @param cookies
 	 * @return sessionCookie
 	 */
-	public static Cookie getSessionCookie(Cookie[] cookies) {
-		Map<String, Cookie> cookieMap = new HashMap<>();
-		for (Cookie cookie : cookies) {
+	public static javax.servlet.http.Cookie getSessionCookie(javax.servlet.http.Cookie[] cookies) {
+		Map<String, javax.servlet.http.Cookie> cookieMap = new HashMap<>();
+		for (javax.servlet.http.Cookie cookie : cookies) {
 		    cookieMap.put(cookie.getName(), cookie);
 		}
-		Cookie sessionCookie = cookieMap.get("couponSession");
+		javax.servlet.http.Cookie sessionCookie = cookieMap.get("couponSession");
 		
 		return sessionCookie;		
 	}
@@ -89,7 +89,7 @@ public class CookieUtil {
 	 * @return
 	 * @throws ApplicationException
 	 */
-	public static Map<String,UserProfile> verifySessionCookie(Cookie sessionCookie) throws ApplicationException {
+	public static Map<String,UserProfile> createSessionToken(Cookie sessionCookie) throws ApplicationException {
 		
 		// cookie parsing by "-" delimiter
 		String codedCookieValue = sessionCookie.getValue();

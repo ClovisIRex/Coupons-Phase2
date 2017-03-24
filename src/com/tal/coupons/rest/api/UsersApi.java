@@ -46,7 +46,6 @@ public class UsersApi {
 
 		// if all is right we create a session and a new cookie and give back to the client
 		if(logonID != -1) {
-			HttpSession session = request.getSession();
 			NewCookie sessionCookie = CookieUtil.createSessionCookie(logonID, userTypeID);
 			return Response.status(Response.Status.OK).cookie(sessionCookie).build();
 		}

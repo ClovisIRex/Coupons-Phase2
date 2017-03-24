@@ -126,7 +126,7 @@ public class CompanyLogic implements ICompanyLogic {
 
 		if(updatedCompany == null){
 			throw new ApplicationException(ErrorType.COMPANY_DOESNT_EXIST,null, "Cannot update this company, "
-					+ "it appears that it was deleted by someone/something else and it doesn't exist anymore.");
+					+ "it appears that it was deleted by someone/something else or it doesn't exist anymore.");
 		}
 	
 		//if we got to this spot it means all is good, let's update
