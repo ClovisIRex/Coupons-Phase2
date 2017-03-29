@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css">
+    <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
 
 </head>
 <body ng-app="SolInvictus" ng>
@@ -15,14 +17,22 @@
   <h1>Coupons system by SOL INVICTUS &copy</h1>
 </div>
   <div ng-view></div>
-</body>
 
+  <!-- JS libraries -->
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="login/login.controller.js"></script>
+
     <script src="app.js"></script>
 
+	<!-- REST Services -->
+  	<script src="services/login.service.js"></script>
 
+
+	<!-- Controllers -->
+    <script src="controllers/login.controller.js"></script>
+    <!--<script src="controllers/admin.controller.js"></script>-->
+</body>
 </html>
