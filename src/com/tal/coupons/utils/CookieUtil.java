@@ -47,11 +47,9 @@ public class CookieUtil {
 		
 		String cookieValue = idCookieValue + "-" + hashedCookieUserType;
 		String base64CookieValue = new String(Base64.getEncoder().encode(cookieValue.getBytes()));
-		
-		sessionCookie = new NewCookie("couponSession",base64CookieValue);
-		System.out.println("cookie: " + sessionCookie.toString());
-		System.out.println("name: " + sessionCookie.getName());
-		System.out.println("value: " + sessionCookie.getValue());
+	
+		sessionCookie = new NewCookie("couponSession",base64CookieValue,"/","localhost","",-1,false);
+	
 		return sessionCookie;
 	}
 	
