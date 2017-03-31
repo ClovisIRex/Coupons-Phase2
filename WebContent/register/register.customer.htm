@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="css/login.css" />
 <div class= "container">
   <div class= "row">
@@ -6,17 +5,23 @@
     </div>
       <div class = "col-md-6">
         <h2>Customer Registration</h2>
-    <form>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="usr">
+    <form name="form" role="form" ng-submit="vm.registerCustomer()">
+      <div class="form-group" 
+      ng-class="{ 'has-error': form.customerName.$dirty && form.customerName.$error.required }">
+        <label for="customerName">customer Name(Username)</label>
+        <input name="customerName" type="text" id="customerName"
+        class="form-control" ng-model="vm.customerName" required>
       </div>
-      <div class="form-group">
-        <label for="pwd">Password</label>
-        <input type="password" class="form-control" id="pwd">
+
+      <div class="form-group"
+      ng-class="{ 'has-error': form.customerPassword.$dirty && form.customerPassword.$error.required }">
+        <label for="customerPassword">Password</label>
+        <input name="customerPassword" type="password" class="form-control" id="customerPassword"
+        ng-model="vm.customerPassword" required>
       </div>
       <div>
-      <button type="button" class="registerbutton btn btn-default"  >Sign up</button>
+      <button type="submit" ng-disabled="form.$invalid || vm.dataLoading"
+       class="registerbutton btn btn-default"  >Sign up</button>
       <a href="#/login" class="btn btn-link">Cancel</a>
       </div>
     </form>

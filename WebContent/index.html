@@ -12,10 +12,10 @@
     <link rel="icon" href="media/favicon.ico" type="image/x-icon">
 
 </head>
-<body ng-app="SolInvictus" ng>
-  <div class="jumbotron">
-  <h1>Coupons system by SOL INVICTUS &copy</h1>
-</div>
+<body ng-app="SolInvictus">
+    <div class="jumbotron">
+      <h1>Coupons system by SOL INVICTUS &copy</h1>
+    </div>
   <div ng-view></div>
 
   <!-- JS libraries -->
@@ -29,10 +29,15 @@
 
 	<!-- REST Services -->
   	<script src="services/login.service.js"></script>
+    <script src="services/register.service.js"></script>
 
 
 	<!-- Controllers -->
     <script src="controllers/login.controller.js"></script>
+    <script src="controllers/register.controller.js"></script>
     <script src="controllers/admin.controller.js"></script>
+
+
+    
 </body>
 </html>

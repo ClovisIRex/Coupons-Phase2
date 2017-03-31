@@ -25,8 +25,11 @@ angular
         $http.post('/CouponsPhase2/rest/login/', { username: user,
                                                    password: password,
                                                    clientType: userID })
-            .then(function (response) {
+            .then(function onSuccess(response) {
                 callback(response);
+            }).catch(function onError(response) {
+              alert("Failed. System error code: " + response.data.internalErrorCode);
+              callback(false);
             });
     }
 

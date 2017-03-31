@@ -5,62 +5,46 @@
         .module('SolInvictus')
         .controller('RegisterController', RegisterController);
 
-    RegisterController.$inject = ['$location', '$rootScope'];
-    function RegisterController($location, $rootScope) {
+    RegisterController.$inject = ['$location', '$rootScope','RegisterService'];
+    function RegisterController($location, $rootScope, RegisterService) {
         var vm = this;
 
-        vm.register = register;
-
+        vm.registerCompany = registerCompany;
+        vm.registerCustomer = registerCustomer;
         
-        function register() {
+        function registerCompany() {
             vm.dataLoading = true;
-            CompanysService.CreateCompany(	vm.user.companyName, 
-            							vm.user.loginName, 
-            							vm.user.loginPassword, 
-            							vm.user.companyName, 
-            							vm.user.companyEmail, 
-            							function (response) 
-            {
-                if (response.data.serviceStatus.success === "true") 
-                {
-                        //$location.path('/login');  
-                        login(vm.user.loginName, vm.user.loginPassword);
-                } 
-                else 
-                {
-                    FlashService.Error(response.data.serviceStatus.errorMessage);
+            var company = {
+                compName : vm.companyName,
+                password : vm.companyPassword,
+                email: vm.companyEmail
+            };
+            RegisterService.createCompany(company, function (response) {
+                if (response)  {
+                    $location.path('/login');
+                } else {
                     vm.dataLoading = false;
                 }
             });
-        };
-        
-        
-        function login( loginName, loginPassword ) 
-        {
-            LoginService.Login(loginName, loginPassword, function (response) {
-            	            	
-                if (response.data.userId !== "0" ) 
-                {                	
-                    LoginService.setCurrentUser( response.data );
-                    
-                    if (response.data.userProfileId === "2" )
-                    {
-                        $location.path('/company.home');
-                    }
-                    else
-                	{
-                        $location.path('/');                	
-                	}
-                } 
-                else 
-                {
-                    FlashService.Error("Login failed");
+        }
+
+        function registerCustomer() {
+            vm.dataLoading = true;
+            var customer = {
+                custName : vm.customerName,
+                password : vm.customerPassword
+            };
+            RegisterService.createCustomer(customer, function (response) {
+                if (response)  {
+                    $location.path('/login');
+                } else {
                     vm.dataLoading = false;
                 }
             });
-        };
-        
-        
-        
-    }// RegisterCompanyController
-})(); // function ()
+        }
+
+        function test() {
+            alert("shit");
+        }
+    }
+})(); 

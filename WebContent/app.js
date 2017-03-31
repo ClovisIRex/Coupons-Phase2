@@ -25,16 +25,15 @@
 			templateUrl : "register/register.home.htm"
 		})
 		.when('/register.customer', {
-				controller: 'RegisterCustomerController',
-				templateUrl: 'register/register.customer.htm',
-				controllerAs: 'vm'
+			controller: 'RegisterController',
+			templateUrl: 'register/register.customer.htm',
+			controllerAs: 'vm'
 			})
-
-			.when('/register.company', {
-				controller: 'RegisterCompanyController',
-				templateUrl: 'register/register.company.htm',
-				controllerAs: 'vm'
-			})
+		.when('/register.company', {
+			controller: 'RegisterController',
+			templateUrl: 'register/register.company.htm',
+			controllerAs: 'vm'
+		})
 
 		/*
 		---------ADMIN VIEWS--------
