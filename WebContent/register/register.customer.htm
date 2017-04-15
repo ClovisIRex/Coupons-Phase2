@@ -3,11 +3,12 @@
   <div class= "row">
     <div class="col-md-3">
     </div>
-      <div class = "col-md-6">
+      <div class = "loginbox col-md-6">
         <h2>Customer Registration</h2>
     <form name="form" role="form" ng-submit="vm.registerCustomer()">
       <div class="form-group" 
       ng-class="{ 'has-error': form.customerName.$dirty && form.customerName.$error.required }">
+        <span class="glyphicon glyphicon-user"></span>
         <label for="customerName">customer Name(Username)</label>
         <input name="customerName" type="text" id="customerName"
         class="form-control" ng-model="vm.customerName" required>
@@ -15,13 +16,14 @@
 
       <div class="form-group"
       ng-class="{ 'has-error': form.customerPassword.$dirty && form.customerPassword.$error.required }">
+        <span class="glyphicon glyphicon-lock"></span>
         <label for="customerPassword">Password</label>
         <input name="customerPassword" type="password" class="form-control" id="customerPassword"
         ng-model="vm.customerPassword" required>
       </div>
       <div>
       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading"
-       class="registerbutton btn btn-default"  >Sign up</button>
+       class="registerbutton btn btn-primary"  >Sign up</button>
       <a href="#/login" class="btn btn-link">Cancel</a>
       </div>
     </form>

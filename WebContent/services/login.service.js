@@ -13,6 +13,7 @@ angular
     var currentUser;
 
     service.Login = Login;
+    service.Logout = Logout;
     service.SetCredentials = SetCredentials;
     service.ClearCredentials = ClearCredentials;
     service.getCurrentUser = getCurrentUser;
@@ -21,7 +22,6 @@ angular
     return service;
 
     function Login(user, password, userID, callback) {
-
         $http.post('/CouponsPhase2/rest/login/', { username: user,
                                                    password: password,
                                                    clientType: userID })
@@ -33,11 +33,21 @@ angular
             });
     }
 
+    function Logout(callback) {
+          $http.delete('/CouponsPhase2/rest/login/')
+            .then(function onSuccess(response) {
+                callback(response);
+            }).catch(function onError(response) {
+              alert("Failed. System error code: " + response);
+              callback(false);
+            });
+        }
+
     function ClearCredentials() {
       $rootScope.globals = {};
       $cookies.remove('globals');
       $http.defaults.headers.common.Authorization = 'Basic';
-    };
+    }
 
     function getCurrentUser() {
       	return $rootScope.globals.currentUser; 
@@ -61,7 +71,5 @@ angular
       $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
       */
     }
-    
-    
   }
 })();

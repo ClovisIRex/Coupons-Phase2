@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -54,19 +55,9 @@ public class UsersApi {
 		}
 	}
 	
-	@GET
+	@DELETE
 	public Response logout(@CookieParam("couponSession") Cookie cookie, @Context HttpServletRequest request) throws ApplicationException {
-		
-		NewCookie logoutCookie = new NewCookie(cookie,"couponsLogout",0,false);
-	
-		HttpSession session = request.getSession(false);
-		if(session != null) {
-			session.invalidate();
-			return Response.status(Response.Status.OK).cookie(logoutCookie).build();
-		}
-	
-		return Response.status(Response.Status.UNAUTHORIZED).build();
-		
+		NewCookie logoutCookie = new NewCookie("couponSession", "", "/", "localhost", null, 0, false);
+		return Response.status(Response.Status.OK).cookie(logoutCookie).build();
 	}
-	
 }

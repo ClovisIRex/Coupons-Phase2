@@ -22,6 +22,7 @@
             LoginService.Login(vm.username, vm.password,vm.userProfileId,function (response) {
                 if(response) {
                     LoginService.SetCredentials(vm.username, vm.password);
+                    LoginService.setCurrentUser({username: vm.username});
                     switch(vm.userProfileId) {
                         case "1":
                             $location.path('/admin.home');

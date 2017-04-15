@@ -55,6 +55,34 @@
 				templateUrl: 'admin/admin.customers.view.htm',
 				controllerAs: 'vm'
 			})
+
+			.when('/admin.coupons', {
+				controller: 'AdminCouponsController',
+				templateUrl: 'admin/admin.coupons.view.htm',
+				controllerAs: 'vm'
+			})
+		/*
+			---------COMPANY VIEWS--------
+		*/
+		.when('/company.home', {
+				controller: 'CompanyController',
+				templateUrl: 'company/company.home.view.htm',
+				controllerAs: 'vm'
+			})
+
+		.when('/company.coupons', {
+				controller: 'CompanyCouponsController',
+				templateUrl: 'company/company.coupons.view.htm',
+				controllerAs: 'vm'
+			})
+
+		.when('/company.coupons.purchases', {
+				controller: 'CompanyPurchasesController',
+				templateUrl: 'company/company.coupons.purchases.view.htm',
+				controllerAs: 'vm'
+			})
+
+
 		.otherwise({ redirectTo: '/login' });
 	}
 	

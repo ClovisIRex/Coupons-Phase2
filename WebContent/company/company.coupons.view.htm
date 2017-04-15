@@ -1,0 +1,92 @@
+ <!-- BEGIN # MODAL ADD -->
+      <div class="modal fade" id="Add-modal" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true"
+      style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            <h4 class="modal-title">
+             Create new Coupon
+            </h4>
+            <br>
+          </div>
+
+          <!-- Begin # DIV Form -->
+          <div id="div-forms">
+
+            <!-- Begin # Login Form -->
+            <form id="login-form" ng-submit="vm.createCoupon()">
+              <div class="modal-body">
+
+                <!-- Success alert -->
+                <div class="alert alert-success" role="alert"
+                  ng-show="vm.createdCouponStatus=='success'">
+                  <strong><span class="glyphicon glyphicon-ok-circle"></span></strong>
+                  Coupon {{vm.newCoupon.couponTitle}} created successfully!
+                </div>
+
+                <!-- Fail alert -->
+                <div class="alert alert-danger" role="alert"
+                  ng-show="vm.createdCouponStatus=='fail'">
+                  <strong><span class="glyphicon glyphicon-remove-circle"></span></strong>
+                  Creating coupon failed: {{vm.errorMessage}}
+                  Error code : {{vm.errorCode}}
+                </div>
+                <br>
+                <div>
+                </div>
+                <br/>
+                  <b> Coupon Title: </b>
+                  <br>
+                 <input id="couponTitle" class="form-control" type="text"
+                  placeholder="Coupon Title" required
+                  ng-model="vm.newCoupon.couponTitle"> 
+                  <br>
+                  <b> Coupon Type: </b>
+                  <br>
+                 <input id="couponTitle" class="form-control" type="text"
+                  placeholder="Coupon Title" required
+                  ng-model="vm.newCoupon.couponTitle"> 
+                  <br>
+                 	<b> Coupon Start Date: </b>
+                  <br>
+                   <input type="datetime-local" name="couponStartDate" required
+                  ng-model="vm.newCoupon.couponStartDate">
+                  <br>
+                  <b> Coupon End Date: </b>
+                  <br>
+                   <input type="datetime-local" name="couponEndDate" required
+                  ng-model="vm.newCoupon.couponEndDate">
+                  <br>
+                   <b> Amount In Stock: </b>
+                  <br>
+                   <input type="number" name="couponsInStock" required
+                  ng-model="vm.newCoupon.couponsInStock">
+                  <br>
+              </div>
+              <div class="modal-footer">
+                <div>
+                  <button type="submit"
+                    class="btn btn-primary btn-lg">Create new coupon</button>
+                </div>
+              </div>
+            </form>
+            <!-- End # Login Form -->
+          </div>
+          <!-- End # DIV Form -->
+        </div>
+      </div>
+    </div>
+<!-- END # MODAL ADD -->
+
+<span class="input-group-btn">            
+            <button data-toggle="modal" data-target="#Add-modal" 
+             type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> Create new Coupon
+            </button>
+</span>     

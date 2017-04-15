@@ -1,8 +1,9 @@
+
 .container {
   margin-top: 20px;
 }
 
-.col-md-6 {
+.loginbox {
   border-style: groove;
   border-width: thin;
   border-radius: 10px;

@@ -42,9 +42,5 @@
                 }
             });
         }
-
-        function test() {
-            alert("shit");
-        }
     }
 })(); 

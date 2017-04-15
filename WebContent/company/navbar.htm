@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/admin.home">Coupons System</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#/company.coupons">Manage Coupons</a></li>
+          <li><a href="#/company.coupons.purchases">View Purchases</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a >Role: <span class="glyphicon glyphicon-briefcase"></span> Company</a></li>
+          <li><a >Logged on as: <span class="glyphicon glyphicon-user"></span> {{vm.user.username}}</a></li>
+          <li><button class = "btn btn-danger navbar-btn" ng-click="vm.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></li>
+        </ul>  
+      </div>
+    </nav>
+  
+  </body>
+</html>
+

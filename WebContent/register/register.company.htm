@@ -3,11 +3,12 @@
   <div class= "row">
     <div class="col-md-3">
     </div>
-      <div class = "col-md-6">
+      <div class = "loginbox col-md-6">
         <h2>Company Registration</h2>
     <form name="form" role="form" ng-submit="vm.registerCompany()">
       <div class="form-group" 
       ng-class="{ 'has-error': form.companyName.$dirty && form.companyName.$error.required }">
+        <span class="glyphicon glyphicon-user"></span>
         <label for="companyName">Company Name(Username)</label>
         <input name="companyName" type="text" id="companyName"
         class="form-control" ng-model="vm.companyName" required>
@@ -15,19 +16,22 @@
 
       <div class="form-group"
       ng-class="{ 'has-error': form.companyPassword.$dirty && form.companyPassword.$error.required }">
+        <span class="glyphicon glyphicon-lock"></span>
         <label for="companyPassword">Password</label>
         <input name="companyPassword" type="password" class="form-control" id="companyPassword"
         ng-model="vm.companyPassword" required>
       </div>
       <div class="form-group"
       ng-class="{ 'has-error': form.companyEmail.$dirty && form.companyEmail.$error.required }">
+      
+        <span class="glyphicon glyphicon-envelope"></span>
         <label for="companyEmail">Email</label>
         <input name="companyEmail" type="text" class="form-control" id="companyEmail"
         ng-model="vm.companyEmail" required>
       </div>
       <div>
       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading"
-       class="registerbutton btn btn-default"  >Sign up</button>
+       class="registerbutton btn btn-primary">Sign up</button>
       <a href="#/login" class="btn btn-link">Cancel</a>
       </div>
     </form>

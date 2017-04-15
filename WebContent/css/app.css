@@ -1,14 +1,10 @@
-.jumbotron {
-  max-height: 8px;
-  font-size: 8em;
-  text-align: center;
-  color: black;
-  margin-bottom: 10;
-  cursor:default;
-  opacity: .7;
-  background-image: url("../media/bayeux.jpg");
-  background-repeat: no-repeat;
-  background-position: center;;
-  -webkit-background-size: cover;
-  background-size: cover;
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid;
+	text-align: left;
+	padding: 8px;
 }
