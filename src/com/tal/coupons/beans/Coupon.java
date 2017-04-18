@@ -22,6 +22,7 @@ public class Coupon {
 	private	double couponPrice;
 	private	String couponImage;
 	private long companyID;
+	private String companyName;
 	
 	
 
@@ -50,6 +51,7 @@ public class Coupon {
 			this.setCouponPrice(couponPrice);
 			this.setCouponImage(couponImage);
 			this.setCompanyID(companyID);
+			this.setCompanyName(companyName);
 		}
 		
 	//ctor w/id, in case we need it
@@ -216,6 +218,14 @@ public class Coupon {
 				+ ", couponEndDate=" + couponEndDate + ", couponsInStock=" + couponsInStock + ", couponType="
 				+ couponType + ", couponMessage=" + couponMessage + ", couponPrice=" + couponPrice + ", couponImage="
 				+ couponImage + ",companyID=" + companyID + "]";
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 }

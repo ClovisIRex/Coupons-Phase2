@@ -59,7 +59,7 @@
                 .then(function (response) {
                     callback(response);
                 }).catch(function onError(response) {
-                    callback(false);
+                    callback(response);
                 });
         }
     }

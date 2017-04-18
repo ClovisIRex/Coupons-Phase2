@@ -61,8 +61,15 @@
         function getAllCoupons() {
             vm.dataLoading = true;
             CouponService.getAllCoupons(function (response) {
-                if (response) {
-                	vm.allCoupons = response.data.coupon;                	                    
+                if (!(response.status == 700 || response.status == 500 || response.status === undefined)) {
+                	vm.coupons = [];
+                    var couponsArr = vm.coupons.concat(response.data.coupon);  
+                    var index;
+                    for(index =0; index < couponsArr.length; index ++) {
+                        couponsArr[index].couponStartDate = moment.unix(couponsArr[index].couponStartDate).format('DD/MM/YYYY');
+                        couponsArr[index].couponEndDate = moment.unix(couponsArr[index].couponEndDate).format('DD/MM/YYYY');
+                    }
+                    vm.allCoupons = couponsArr;    	      		                    
                 } else {
                     vm.dataLoading = false;
                 }
@@ -72,12 +79,13 @@
         function updateCoupon() {
 
             vm.couponForUpdate = {
+                    "companyName" : $rootScope.globals.currentUser.username,
 			  	 	"couponId"       :  0,
                     "couponEndDate" : "",
 			    	"couponPrice"   : 0
 			 };
 
-            var yyyymmdd = moment(vm.currentCouponNew.couponEndDate).format('YYYYMMDD');
+            var yyyymmdd = moment(vm.currentCouponNew.couponEndDate,'YYYYMMDD').unix();
             vm.couponForUpdate.couponId = vm.currentCouponNew.couponId;
             vm.couponForUpdate.couponPrice = vm.currentCouponNew.couponPrice;
             vm.couponForUpdate.couponEndDate = yyyymmdd;
@@ -93,14 +101,16 @@
                     vm.currentCoupon.couponPrice = vm.currentCouponNew.couponPrice;
                 	vm.currentCoupon.couponEndDate = vm.currentCouponNew.couponEndDate;
                 	vm.updateCouponStatus = "success";
+                    getAllCoupons();
                 }
             });    
     		
         }
 
         function removeCoupon(id) {
-            vm.dataLoading = true;        	
-            CouponService.removeCoupon(id,function (response) {
+            vm.dataLoading = true;
+            var name = $rootScope.globals.currentUser.username;     	
+            CouponService.removeCoupon(name,id,function (response) {
                 if (response.status == 700 || response.status == 500 || response.status === undefined) {
                     vm.errorMessage = response.data.message;
                     vm.errorCode = response.data.internalErrorCode;
@@ -113,30 +123,6 @@
             });        	    
         }
 
-      
-        
-        /*
-        
-        function getCompanyCoupons() 
-        {
-            vm.dataLoading = true;
-            CouponService.GetCompanyCoupons( function (response) 
-            {
-                if (response.data.serviceStatus.success === "true") 
-                {
-                	vm.coupons = [];
-                	if ( response.data.coupons !== undefined )
-                	{
-                		vm.coupons = vm.coupons.concat(response.data.coupons);
-                	}
-                } 
-                else 
-                {
-                    FlashService.Error(response.data.serviceStatus.errorMessage);
-                    vm.dataLoading = false;
-                }
-            });
-        };*/
         
           function logout() {
             vm.dataLoading = true;
@@ -146,10 +132,7 @@
                     vm.dataLoading = false;
                 }
             });
-
-
-
-           
+       
 
         }
         

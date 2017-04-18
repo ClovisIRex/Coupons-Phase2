@@ -42,11 +42,14 @@ public class CouponApi {
 	@POST
 	public void createCoupon(@CookieParam("couponSession") Cookie cookie,Coupon coupon) throws ApplicationException {
 		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
-
+		CompanyLogic companyLogic = new CompanyLogic();
+		long companyId = companyLogic.getIdByCompanyName(coupon.getCompanyName());
+		
 		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
 				(token.containsValue(UserProfile.COMPANY) &&
-						token.containsKey(String.valueOf((coupon.getCompanyID()))))) { 
+						token.containsKey(String.valueOf((companyId))))) { 
 			CouponLogic couponLogic = new CouponLogic();
+			coupon.setCompanyID(companyId);
 			couponLogic.createCoupon(coupon);		
 		} else {
 			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
@@ -54,13 +57,22 @@ public class CouponApi {
 	}
 
 	@DELETE
-	@Path("/{id}/")
-	public void removeCoupon(@CookieParam("couponSession") Cookie cookie, @PathParam("id") long couponID) throws ApplicationException {
+	@Path("/{name}/{id}/")
+	public void removeCoupon(@CookieParam("couponSession") Cookie cookie,@PathParam("name") String compName ,@PathParam("id") long couponID) throws ApplicationException {
 		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+		
+		long companyId = -1;
+		
+		if(!compName.equals("admin")) { 
+			CompanyLogic companyLogic = new CompanyLogic();
+			companyId = companyLogic.getIdByCompanyName(compName);
+		}
+		
+		
 
 		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
 				(token.containsValue(UserProfile.COMPANY) &&
-						token.containsKey(String.valueOf((couponID))))) {
+						token.containsKey(String.valueOf((companyId))))) {
 			CouponLogic couponLogic = new CouponLogic();
 			couponLogic.removeCoupon(couponID);
 		} else {
@@ -72,9 +84,17 @@ public class CouponApi {
 	public void updateCoupon(@CookieParam("couponSession") Cookie cookie,Coupon coupon) throws ApplicationException {
 		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
 
+		long companyId = -1;
+		String companyName = coupon.getCompanyName();
+		
+		if(!companyName.equals("admin")) { 
+			CompanyLogic companyLogic = new CompanyLogic();
+			companyId = companyLogic.getIdByCompanyName(companyName);
+		}
+		
 		if(token.containsValue(UserProfile.ADMINISTRATOR) ||
 				(token.containsValue(UserProfile.COMPANY) &&
-						token.containsKey(String.valueOf((coupon.getCompanyID()))))) {
+						token.containsKey(String.valueOf((companyId))))) {
 			CouponLogic couponLogic = new CouponLogic();
 			couponLogic.updateCoupon(coupon.getCouponId(),coupon.getCouponPrice(),
 					coupon.getCouponEndDate());
@@ -136,6 +156,30 @@ public class CouponApi {
 			for(UserProfile profile : UserProfile.values() ) { 
 				if(token.containsValue(profile)) { 
 					CouponLogic couponLogic = new CouponLogic();
+					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+							couponLogic.getCouponsByCompanyId(companyId);
+
+					return coupons;
+				}
+			}
+		}  else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+		return null;		
+	}
+	
+	@GET
+	@Path("/CompanyName/{name}/")
+	public Collection<Coupon> getCouponsByCompanyName(@CookieParam("couponSession") Cookie cookie, @PathParam("name") String name) throws ApplicationException {
+		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
+
+		if(token != null) { 
+			for(UserProfile profile : UserProfile.values() ) { 
+				if(token.containsValue(profile)) { 
+					CouponLogic couponLogic = new CouponLogic();
+					CompanyLogic companyLogic = new CompanyLogic();
+					long companyId = companyLogic.getIdByCompanyName(name);
+					
 					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
 							couponLogic.getCouponsByCompanyId(companyId);
 

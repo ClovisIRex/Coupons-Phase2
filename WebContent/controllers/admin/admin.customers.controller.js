@@ -59,8 +59,9 @@
         function getAllCustomers() {
             vm.dataLoading = true;
             CustomersService.getAllCustomers(function (response) {
-                if (response) {
-                	vm.allCustomers = response.data.customer;                	                    
+                if (!(response.status == 700 || response.status == 500 || response.status === undefined)) {
+                    vm.customers = [];
+                	vm.allCustomers = vm.customers.concat(response.data.customer);                	                    
                 } else {
                     vm.dataLoading = false;
                 }

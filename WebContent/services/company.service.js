@@ -44,7 +44,7 @@
                     callback(response);
                 }).catch(function onError(response) {
                     callback(response);
-                });;
+                });
         }
 
         function getCompany(companyId, callback) {
@@ -61,7 +61,7 @@
                 .then(function  OnSuccess (response) {
                     callback(response);
                 }).catch(function onError(response) {
-                    callback(false);
+                    callback(response);
                 });
         }
     }

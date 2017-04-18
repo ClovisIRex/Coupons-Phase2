@@ -75,16 +75,32 @@
 				templateUrl: 'company/company.coupons.view.htm',
 				controllerAs: 'vm'
 			})
+		
+		/*
+			---------CUSTOMER VIEWS--------
+		*/
+		.when('/customer.home', {
+				controller: 'CustomerController',
+				templateUrl: 'customer/customer.home.view.htm',
+				controllerAs: 'vm'
+			})
 
-		.when('/company.coupons.purchases', {
-				controller: 'CompanyPurchasesController',
-				templateUrl: 'company/company.coupons.purchases.view.htm',
+		.when('/company.purchases', {
+				controller: 'CustomerPurchasesController',
+				templateUrl: 'customer/customer.my.coupons.view.htm',
+				controllerAs: 'vm'
+			})
+
+		.when('/company.buy', {
+				controller: 'CustomerCouponsController',
+				templateUrl: 'customer/customer.buy.coupons.view.htm',
 				controllerAs: 'vm'
 			})
 
 
 		.otherwise({ redirectTo: '/login' });
 	}
+	
 	
 		run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
 		function run($rootScope,$location,$cookies, $http) {

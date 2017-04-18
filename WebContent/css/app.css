@@ -8,3 +8,10 @@ td, th {
 	text-align: left;
 	padding: 8px;
 }
+
+.dropdown {
+  display: inline;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}

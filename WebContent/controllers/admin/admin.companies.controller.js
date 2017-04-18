@@ -63,8 +63,9 @@
         function getAllCompanies() {
             vm.dataLoading = true;
             CompanyService.getAllCompanies(function (response) {
-                if (response) {
-                	vm.allCompanies = response.data.company;                	                    
+                if (!(response.status == 700 || response.status == 500 || response.status === undefined)) {
+                    vm.companies = [];
+                	vm.allCompanies = vm.companies.concat(response.data.company);                	                    
                 } else {
                     vm.dataLoading = false;
                 }

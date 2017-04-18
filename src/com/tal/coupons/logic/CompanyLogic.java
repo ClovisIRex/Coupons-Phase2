@@ -154,6 +154,11 @@ public class CompanyLogic implements ICompanyLogic {
 		}
 		return company;
 	}
+	
+	public long getIdByCompanyName(String name) throws ApplicationException {
+		long id = companyDao.getIdByCompanyName(name);
+		return id;
+	}
 
 	/**
 	 * This function gets all companies from the db.
