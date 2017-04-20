@@ -118,6 +118,17 @@ public class CustomerLogic implements ICustomerLogic {
 		}
 		return customer;
 	}
+	
+
+	public Customer getCustomerByName(String customerName) throws ApplicationException {
+		Customer customer = customerDao.getCustomerByName(customerName);
+
+		if(customer == null) {
+			throw new ApplicationException(ErrorType.CUSTOMER_DOESNT_EXIST,null, "Cannot get this customer, "
+					+ "it appears that it was deleted by someone/something else and it doesn't exist anymore.");
+		}
+		return customer;
+	}
 
 	
 	/**

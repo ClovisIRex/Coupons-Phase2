@@ -1,0 +1,168 @@
+ <div ng-include="'customer/navbar.customer.htm'"></div>
+<style>
+  body { padding: 8px; }
+</style>
+<div class= "container">
+  <div class= "row">
+    <br>
+    <div class="well">
+    Coupons For Sale
+    </div>
+    <br>
+    <div class="col-md-3">
+    </div>
+     <div class = "col-md-12">
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="text" class="form-control" placeholder="Search coupon..." ng-model="searchCoupon"> 
+          </div>
+        </div>
+      </form>
+      <br>
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-inverse">
+          <tr>
+            <th>ID</th>
+            <th>Coupon Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Amount In Stock</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Company ID</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="coupon in vm.allCoupons | filter: searchCoupon"> 
+            <td>{{coupon.couponId}}</td>
+            <td>{{coupon.couponTitle}}</td>
+            <td>{{coupon.couponStartDate | date : 'dd/MM/yyyy'}}</td>
+            <td>{{coupon.couponEndDate | date : 'dd/MM/yyyy'}}</td>
+            <td>{{coupon.couponsInStock}}</td>
+            <td>{{coupon.couponType}}</td>
+            <td>{{coupon.couponMessage}}</td>
+            <td>{{coupon.couponPrice | currency : '₪'}}</td>
+            <td>{{coupon.companyID}}</td>
+
+            <td>
+              <button
+              ng-click="vm.setCurrentCoupon(coupon)"
+				      data-toggle="modal" data-target="#View-modal"
+              type="button" class="btn btn-default btn-sm right">
+              <span class="glyphicon glyphicon-info-sign"></span> View
+            </button>
+              <button
+              ng-click="vm.setCurrentCoupon(coupon)"
+				      data-toggle="modal" data-target="#Buy-modal"
+              type="button" class="btn btn-primary btn-sm right">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Buy
+            </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- BEGIN # MODAL VIEW -->
+      <div class="modal fade" id="View-modal" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true"
+      style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            <h4 class="modal-title">
+             Coupon details: {{vm.currentCouponNew.couponTitle}}
+            </h4>
+            <br>
+          </div>
+
+          <!-- Begin # DIV Form -->
+          <div id="div-forms">
+
+            <!-- Begin # Login Form -->
+            <form id="login-form" ng-submit="vm.createCoupon()" role="form">
+              <div class="modal-body">
+                  <br>
+                  <b> Coupon Type:  {{vm.currentCouponNew.couponType}} </b>
+                  <br>
+                  <b> Coupon Start Date: {{vm.currentCouponNew.couponStartDate}} </b>
+                  <br>
+                  <b> Coupon End Date: {{vm.currentCouponNew.couponEndDate}} </b>
+                  <br>
+                   <b> Price: {{vm.currentCouponNew.couponPrice}}</b>
+                  <br>
+                   <b> Amount In Stock: {{vm.currentCouponNew.couponsInStock}} </b>
+                  <br>
+                  <b> Description: {{vm.currentCouponNew.couponMessage}}</b>
+                  <br>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </form>
+            <!-- End # Login Form -->
+          </div>
+          <!-- End # DIV Form -->
+        </div>
+      </div>
+    </div>
+<!-- END # MODAL VIEW -->
+
+<!-- BEGIN # MODAL BUY -->
+    <div class="modal fade" id="Buy-modal" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true"
+      style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+            <h4 class="modal-title">
+             Are you sure you want to buy coupon : {{vm.currentCouponNew.couponTitle}}?
+            </h4>
+            <br>
+          </div>
+
+          <!-- Begin # DIV Form -->
+          <div id="div-forms">
+              <div class="modal-body">
+
+                <!-- Success alert -->
+                <div class="alert alert-success" role="alert"
+                  ng-show="vm.purchasedCouponStatus=='success'">
+                  <strong><span class="glyphicon glyphicon-ok-circle"></span></strong>
+                  Coupon: {{vm.currentCouponNew.couponTitle}} purchased successfully!
+                </div>
+
+                <!-- Fail alert -->
+                <div class="alert alert-danger" role="alert"
+                  ng-show="vm.purchasedCouponStatus=='fail'">
+                  <strong><span class="glyphicon glyphicon-remove-circle"></span></strong>
+                  purchasing coupon failed: {{vm.errorMessage}}
+                  Error code : {{vm.errorCode}}
+                </div>
+                <br>
+              <div class="modal-footer">
+                <div>
+                  <button type="button" ng-click="vm.purchaseCoupon()" 
+                    class="btn btn-primary center-block">Buy</button>
+                </div>
+              </div>
+          </div>
+          <!-- End # DIV Form -->
+        </div>
+      </div>
+    </div>
+<!-- END # MODAL BUY -->
+
+

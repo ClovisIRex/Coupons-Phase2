@@ -113,7 +113,9 @@ public class CouponApi {
 			for(UserProfile profile : UserProfile.values() ) {
 				if(token.containsValue(profile)) {
 					CouponLogic couponLogic = new CouponLogic();
-					couponLogic.purchaseCoupon(details.getCustomerId(), details.getCouponId());
+					CustomerLogic customerLogic = new CustomerLogic();
+					Customer customer = customerLogic.getCustomerByName(details.getCustomerName());
+					couponLogic.purchaseCoupon(customer.getId(), details.getCouponId());
 				}
 			}
 		} else {
@@ -134,7 +136,6 @@ public class CouponApi {
 					CouponLogic couponLogic = new CouponLogic();
 					ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
 							couponLogic.getCouponsByType(CouponType.valueOf(couponType.toUpperCase())); 
-
 					return coupons;
 				}
 			}
@@ -214,16 +215,15 @@ public class CouponApi {
 
 	@GET
 	public Collection<Coupon> getAllCoupons(@CookieParam("couponSession") Cookie cookie) throws ApplicationException {
-		Map<String,UserProfile> token = CookieUtil.createSessionToken(cookie);
-		
-		if(token.containsValue(UserProfile.ADMINISTRATOR)) {
+		try{
 			CouponLogic couponLogic = new CouponLogic();
 			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
 					couponLogic.getAllCoupons();
 			return coupons;
-		} else {
+		} catch(Exception e) {
 			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
 		}
+	
 	}
 
 	@GET
@@ -258,6 +258,27 @@ public class CouponApi {
 
 			return coupons;
 		} else {
+			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
+		}
+	}
+	
+	@GET
+	@Path("/purchase/customername/{customername}/")
+	public Collection<Coupon> getAllPurchasedCouponsbyCustomerName(
+			@CookieParam("couponSession") Cookie cookie, @PathParam("customername") 
+			String customerName) throws ApplicationException {
+
+		try {
+			CustomerLogic customerLogic = new CustomerLogic();
+			CouponLogic couponLogic = new CouponLogic();
+			Customer customer = customerLogic.getCustomerByName(customerName);
+			
+			ArrayList<Coupon> coupons = (ArrayList<Coupon>) 
+			couponLogic.getAllPurchasedCouponsByCustomerId(customer.getId());
+			return coupons;
+			
+			
+		} catch(Exception e) {
 			throw new ApplicationException(ErrorType.INVALID_COOKIE, null, "invalid cookie or unauthorized use with cookie");
 		}
 	}

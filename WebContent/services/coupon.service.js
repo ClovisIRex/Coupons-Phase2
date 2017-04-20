@@ -20,6 +20,7 @@
         service.getAllCoupons = getAllCoupons;
 		service.getAllPurchasedCouponsbyType 	= getAllPurchasedCouponsbyType;
 		service.getAllPurchasedCouponsbyPrice 	= getAllPurchasedCouponsbyPrice;
+		service.getAllPurchasedCouponsbyCustomerName 	= getAllPurchasedCouponsbyCustomerName;
 		service.getAllPurchasedCoupons = getAllPurchasedCoupons;
         
 		
@@ -124,6 +125,15 @@
                 });
 		}
 
+		function getAllPurchasedCouponsbyCustomerName(customerName,callback) {
+			$http.get('/CouponsPhase2/rest/api/coupon/purchase/customername/' + customerName)
+			.then(function (response) {
+				callback(response);
+			}).catch(function onError(response) {
+                    callback(response);
+                });
+		}
+
 		function getAllPurchasedCoupons(callback) {
 			$http.get('/CouponsPhase2/rest/api/coupon/purchase')
 			.then(function (response) {
@@ -132,5 +142,7 @@
                     callback(response);
                 });
 		}
+
+		
 	}
 })();

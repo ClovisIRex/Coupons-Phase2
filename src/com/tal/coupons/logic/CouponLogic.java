@@ -133,7 +133,7 @@ public class CouponLogic implements ICouponLogic {
 				}
 				
 				//Cannot purchase a coupon with expired date
-				if(coupon.getCouponEndDate() <= currentTime) {
+				if(coupon.getCouponEndDate() >= currentTime) {
 					throw new ApplicationException(ErrorType.COUPON_EXPIRED,null, "Coupon date has expired, cannot purchase.");
 				}
 				
@@ -232,6 +232,14 @@ public class CouponLogic implements ICouponLogic {
 	public Collection<Coupon> getAllPurchasedCouponsByPrice(double couponPrice) throws ApplicationException {
 
 		ArrayList<Coupon> coupons = (ArrayList<Coupon>) couponDao.getAllPurchasedCouponsByPrice(couponPrice);
+
+		return coupons;
+	}
+	
+
+	public Collection<Coupon> getAllPurchasedCouponsByCustomerId(long customerId) throws ApplicationException {
+
+		ArrayList<Coupon> coupons = (ArrayList<Coupon>) couponDao.getAllPurchasedCouponsByCustomerId(customerId);
 
 		return coupons;
 	}

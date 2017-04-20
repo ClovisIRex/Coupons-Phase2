@@ -11,23 +11,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class PurchaseDetails {
-	private long customerId;
+	private String customerName;
 	private long couponId;
 	
 	public PurchaseDetails() {
 	}
 	
-	public PurchaseDetails(long custId,long coupId) {
-		this.setCustomerId(custId);
-		this.setCouponId(coupId);
+	public PurchaseDetails(String customerName,long couponId) {
+		this.setCustomerName(customerName);
+		this.setCouponId(couponId);
 	}
 
-	public long getCustomerId() {
-		return customerId;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public long getCouponId() {

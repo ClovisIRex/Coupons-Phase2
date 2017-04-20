@@ -666,6 +666,58 @@ public class CouponDao implements ICouponsDao {
 	}
 	
 	
+
+	public Collection<Coupon> getAllPurchasedCouponsByCustomerId(long customerId) throws ApplicationException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<Coupon> allCouponsReturned = new ArrayList<Coupon>();
+		
+		
+		try 
+		{
+			// Getting a connection from the connections manager (getConnection is a static method)
+			connection = JdbcUtils.getConnection();
+			
+			//creating the SQL query
+			
+			String sql = "SELECT * FROM"
+					+ " (SELECT coupons.* FROM coupons "
+					+ "INNER JOIN join_customer_coupon "
+					+ "ON coupons.COUPON_ID=join_customer_coupon.COUPON_ID "
+					+ "WHERE join_customer_coupon.CUSTOMER_ID = ?) AS innerSelect;";
+
+			// Creating a statement object which holds the SQL we're about to execute
+			preparedStatement = connection.prepareStatement(sql);
+			
+			// Replacing question mark with the price
+			preparedStatement.setLong(1, customerId);
+						
+
+			resultSet = preparedStatement.executeQuery(); 
+				
+			//extracting data from the resultSet in order to build the coupon object to be returned
+			
+			while(resultSet.next()) {
+				Coupon couponReturned = new Coupon();
+				this.extractDataFromResultSetToCouponBean(couponReturned,resultSet);
+				allCouponsReturned.add(couponReturned);				
+			}	
+		} 
+		
+		catch (SQLException e) 
+		{
+			throw new ApplicationException(ErrorType.DAO_GET_ERROR, e, "Failed to get due to :" + e.getMessage());
+		} 
+		finally 
+		{
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+		
+		return allCouponsReturned;
+	}
+	
+	
 	
 	/**
 	 * This function removes all the purchased coupons from the db according to their company ID.

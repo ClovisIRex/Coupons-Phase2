@@ -477,4 +477,53 @@ public class CustomerDao implements ICustomerDao {
 		return customerId;
 	}
 
+	public Customer getCustomerByName(String customerName) throws ApplicationException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Customer customerReturned = new Customer();
+		
+		
+		try 
+		{
+			// Getting a connection from the connections manager (getConnection is a static method)
+			connection = JdbcUtils.getConnection();
+			
+			//creating the SQL query
+			
+			String sql = "SELECT * FROM customers WHERE CUSTOMER_NAME = ?";
+
+			// Creating a statement object which holds the SQL we're about to execute
+			preparedStatement = connection.prepareStatement(sql);
+
+			// Replacing question mark with their customerID
+			preparedStatement.setString(1, customerName);
+			
+			// executing query, putting result returned by the function in resultSet
+			resultSet = preparedStatement.executeQuery(); 
+			
+			//If no results were found in the db, our function won't return anything
+			if(!resultSet.next()) {
+				return null;
+			}
+			
+			//extracting data from the resultSet in order to build the customer object to be returned
+			
+			customerReturned.setId(resultSet.getLong("CUSTOMER_ID"));
+			customerReturned.setCustName(resultSet.getString("CUSTOMER_NAME"));
+			customerReturned.setPassword(resultSet.getString("PASSWORD"));
+		} 
+		
+		catch (SQLException e) 
+		{
+			throw new ApplicationException(ErrorType.DAO_GET_ERROR, e, "Failed to get due to :" + e.getMessage());
+		} 
+		finally 
+		{
+			JdbcUtils.closeResources(connection, preparedStatement,resultSet);
+		}
+		
+		return customerReturned;
+	}
+
 }

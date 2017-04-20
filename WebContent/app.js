@@ -84,16 +84,16 @@
 				templateUrl: 'customer/customer.home.view.htm',
 				controllerAs: 'vm'
 			})
-
-		.when('/company.purchases', {
-				controller: 'CustomerPurchasesController',
-				templateUrl: 'customer/customer.my.coupons.view.htm',
+			
+		.when('/customer.buy', {
+				controller: 'CustomerCouponsController',
+				templateUrl: 'customer/customer.buy.coupons.view.htm',
 				controllerAs: 'vm'
 			})
 
-		.when('/company.buy', {
-				controller: 'CustomerCouponsController',
-				templateUrl: 'customer/customer.buy.coupons.view.htm',
+		.when('/customer.purchases', {
+				controller: 'CustomerPurchasesController',
+				templateUrl: 'customer/customer.my.coupons.view.htm',
 				controllerAs: 'vm'
 			})
 
